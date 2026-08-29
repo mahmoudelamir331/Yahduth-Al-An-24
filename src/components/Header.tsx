@@ -1,7 +1,9 @@
 "use client";
+
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Search, Menu, X, Moon, Sun, Calendar } from "lucide-react";
 import { useTheme } from "next-themes";
 
@@ -27,6 +29,7 @@ export function Header() {
   const [searchQuery, setSearchQuery] = useState("");
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   const [todayDate, setTodayDate] = useState("");
 
   useEffect(() => {
@@ -199,16 +202,31 @@ export function Header() {
                 البحث في يحدث الآن 24
               </h3>
             </div>
-            <div className="relative">
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (searchQuery.trim()) {
+                  router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+                  setIsSearchOpen(false);
+                }
+              }}
+              className="flex gap-2"
+            >
               <input
                 type="text"
-                placeholder="اكتب كلمات البحث (مثل: أسوان، اقتصاد، تقارير)..."
+                placeholder="ابحث في الأخبار والتقارير..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-foreground/5 border border-foreground/10 rounded-xl py-3 px-4 text-foreground placeholder:text-foreground/40 focus:outline-none focus:ring-2 focus:ring-primary text-sm"
+                className="flex-1 bg-foreground/5 border border-foreground/10 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary font-bold text-foreground"
                 autoFocus
               />
-            </div>
+              <button
+                type="submit"
+                className="bg-primary hover:bg-primary/90 text-white font-extrabold px-5 py-2.5 rounded-xl text-xs transition-colors shadow"
+              >
+                بحث
+              </button>
+            </form>
             {searchQuery && (
               <div className="mt-4 p-3 bg-foreground/5 rounded-xl text-xs text-foreground/70">
                 جاري البحث عن: <strong className="text-primary">{searchQuery}</strong>...
