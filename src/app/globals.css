@@ -1,17 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fafafa;
-  --foreground: #2f4f4f;
-  --primary: #000080;
-  --urgent: #cc3333;
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --primary: #1e3a8a;
+  --urgent: #dc2626;
+  --accent: #d97706;
 }
 
 .dark {
-  --background: #333333;
-  --foreground: #f4f4f5;
-  --primary: #4a90e2;
-  --urgent: #e74c3c;
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --primary: #3b82f6;
+  --urgent: #ef4444;
+  --accent: #f59e0b;
 }
 
 @theme inline {
@@ -19,10 +21,39 @@
   --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-urgent: var(--urgent);
+  --color-accent: var(--accent);
   --font-sans: var(--font-cairo), var(--font-geist-sans), sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
 }
+
+/* Custom Animations */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-ticker {
+  display: flex;
+  width: max-content;
+  animation: ticker 30s linear infinite;
+}
+
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.95); opacity: 0.8; }
+  50% { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.8; }
+}
+
+.pulse-urgent {
+  animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
