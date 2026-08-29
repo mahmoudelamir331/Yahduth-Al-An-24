@@ -169,9 +169,9 @@ export function Header() {
             <span>عاجل</span>
           </div>
           <div className="flex-1 overflow-hidden relative">
-            <div className="animate-ticker space-x-8 space-x-reverse font-semibold py-1">
+            <div className="animate-ticker space-x-8 space-x-reverse font-semibold py-1 hover:[animation-play-state:paused] cursor-pointer">
               {TickerNews.concat(TickerNews).map((item, idx) => (
-                <span key={idx} className="inline-flex items-center gap-2 cursor-pointer hover:text-primary transition-colors">
+                <span key={idx} className="inline-flex items-center gap-2 hover:text-primary transition-colors">
                   <span className="w-1.5 h-1.5 rounded-full bg-urgent"></span>
                   {item}
                 </span>

@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Eye, TrendingUp, MapPin } from "lucide-react";
-import { ALL_NEWS, Article } from "@/data/newsData";
+import { ALL_NEWS } from "@/data/newsData";
+import { LiveMediaSection } from "@/components/LiveMediaSection";
 
 const HeroMainArticle = ALL_NEWS[0];
 const HeroSubArticles = ALL_NEWS.slice(1, 4);
@@ -27,7 +28,7 @@ export default function Home() {
     : AllNewsList.filter((n) => n.category.includes(activeTab));
 
   return (
-    <div className="container mx-auto px-4 py-6 space-y-10">
+    <div className="container mx-auto px-4 py-6 space-y-12">
       
       {/* General Site Banner */}
       <section className="bg-gradient-to-r from-primary via-primary/95 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10">
@@ -73,7 +74,7 @@ export default function Home() {
       {/* Main Hero News Grid */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        {/* Main Article Card (Clickable to /news/1) */}
+        {/* Main Article Card (8 Columns) */}
         <Link href={`/news/${HeroMainArticle.id}`} className="lg:col-span-8 group bg-background border border-foreground/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col block">
           <div className={`relative h-72 md:h-88 w-full bg-gradient-to-br ${HeroMainArticle.gradient} p-6 md:p-8 flex flex-col justify-between text-white overflow-hidden`}>
             
@@ -127,7 +128,7 @@ export default function Home() {
           </div>
         </Link>
 
-        {/* Secondary Articles Stack */}
+        {/* Secondary Articles Stack (4 Columns) */}
         <div className="lg:col-span-4 space-y-3">
           <div className="flex items-center justify-between border-b border-foreground/10 pb-2">
             <h3 className="text-base font-black text-primary flex items-center gap-2">
@@ -164,6 +165,9 @@ export default function Home() {
         </div>
 
       </section>
+
+      {/* Live Broadcast & Media Section (Smart Component) */}
+      <LiveMediaSection />
 
       {/* Interactive Category Tabs & News Section */}
       <section className="space-y-6 pt-2">
