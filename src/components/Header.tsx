@@ -7,11 +7,11 @@ import { useTheme } from "next-themes";
 
 const Categories = [
   { name: "الرئيسية", href: "/" },
-  { name: "أخبار أسوان", href: "#aswan" },
-  { name: "عاجل", href: "#urgent" },
-  { name: "سياسة واقتصاد", href: "#politics" },
-  { name: "تحقيقات وحوارات", href: "#reports" },
-  { name: "رياضة وتكنولوجيا", href: "#sports" },
+  { name: "أخبار أسوان", href: "/category/aswan" },
+  { name: "عاجل", href: "/category/urgent" },
+  { name: "سياسة واقتصاد", href: "/category/politics" },
+  { name: "تحقيقات وحوارات", href: "/category/reports" },
+  { name: "رياضة وتكنولوجيا", href: "/category/sports" },
 ];
 
 const TickerNews = [

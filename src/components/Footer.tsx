@@ -33,11 +33,11 @@ export function Footer() {
         </div>
 
         {/* Quick Links */}
-        <div className="flex items-center gap-6 text-sm font-semibold text-foreground/70">
+        <div className="flex items-center gap-6 text-sm font-semibold text-foreground/70 flex-wrap">
           <Link href="/" className="hover:text-primary transition-colors">الرئيسية</Link>
-          <Link href="#aswan" className="hover:text-primary transition-colors">أخبار أسوان</Link>
-          <Link href="#reports" className="hover:text-primary transition-colors">تقارير صحفية</Link>
-          <Link href="#contact" className="hover:text-primary transition-colors">تواصل معنا</Link>
+          <Link href="/category/aswan" className="hover:text-primary transition-colors">أخبار أسوان</Link>
+          <Link href="/category/reports" className="hover:text-primary transition-colors">تقارير صحفية</Link>
+          <Link href="/category/urgent" className="hover:text-primary transition-colors">الأخبار العاجلة</Link>
         </div>
 
         {/* Social Links & Copyright */}
