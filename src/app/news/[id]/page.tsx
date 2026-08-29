@@ -194,21 +194,24 @@ export default function NewsDetailPage({ params }: PageProps) {
       </header>
 
       {/* Featured Cover / Responsive Image Card */}
-      <div className={`relative h-72 md:h-96 w-full rounded-3xl overflow-hidden bg-gradient-to-br ${article.gradient} p-6 md:p-8 flex flex-col justify-end text-white shadow-xl border border-white/10`}>
-        <div className="absolute left-[-20px] bottom-[-20px] w-80 h-80 opacity-15 pointer-events-none">
-          <Image src="/logo.jpg" alt="Watermark" fill className="object-contain" />
-        </div>
+      <div className="relative h-72 md:h-96 w-full rounded-3xl overflow-hidden bg-slate-900 p-6 md:p-8 flex flex-col justify-end text-white shadow-xl border border-white/10">
+        {article.imageUrl ? (
+          <Image src={article.imageUrl} alt={article.title} fill className="object-cover" priority />
+        ) : (
+          <div className={`absolute inset-0 bg-gradient-to-br ${article.gradient}`}></div>
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
         <div className="relative z-10 flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-2 bg-black/40 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/20 text-xs font-bold">
+          <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/20 text-xs font-bold">
             <div className="relative w-5 h-5 rounded-full overflow-hidden shrink-0 border border-amber-300">
               <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
             </div>
             <span>تغطية خاصة - يحدث الآن 24</span>
           </div>
 
-          <span className="text-[11px] font-bold text-slate-200 bg-black/50 backdrop-blur-md px-3 py-1 rounded-lg">
-            تصوير حقيقي وخلفية مستندة للأحداث
+          <span className="text-[11px] font-bold text-slate-200 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
+            صورة صحفية حقيقية عالية الجودة
           </span>
         </div>
       </div>

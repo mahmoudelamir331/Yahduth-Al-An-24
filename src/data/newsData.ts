@@ -8,6 +8,7 @@ export interface Article {
   excerpt: string;
   content: string[];
   gradient: string;
+  imageUrl?: string;
   author: string;
   date: string;
   views: string;
@@ -30,6 +31,7 @@ export const ALL_NEWS: Article[] = [
       "وأكدت التقارير التنفيذية أن المحافظة تشهد طفرة غير مسبوقة في مشروعات مياه الشرب والصرف الصحي، بالإضافة إلى التوسع في إنشاء مجمعات الخدمات الحكومية المتكاملة لتسهيل الإجراءات اليومية على أهالي القرى والمراكز."
     ],
     gradient: "from-blue-900 via-slate-900 to-indigo-950",
+    imageUrl: "/news/corniche.png",
     author: "محمد الأمين (مراسل أسوان)",
     date: "منذ 15 دقيقة",
     views: "3.4k",
@@ -49,6 +51,7 @@ export const ALL_NEWS: Article[] = [
       "وأكد المشاركون على أهمية دعم مشروعات الطاقة المتجددة والصناعات التحويلية التي تمتاز بها المنطقة لفتح آفاق جديدة للشباب وتوليد فرص عمل مستدامة."
     ],
     gradient: "from-slate-900 via-blue-950 to-emerald-950",
+    imageUrl: "/news/forum.png",
     author: "قسم الاقتصاد",
     date: "منذ ساعة",
     views: "2.1k",
@@ -68,6 +71,7 @@ export const ALL_NEWS: Article[] = [
       "من جانبها كثفت الجهات المعنية من جهودها لتقديم كافة التسهيلات للزائرين وتوفير أفضل الخدمات الفندقية والنقل النهري لضمان رحلة مميزة لجميع ضيوف المحافظة."
     ],
     gradient: "from-indigo-950 via-slate-900 to-amber-950",
+    imageUrl: "/news/temple.png",
     author: "محمد الأمين",
     date: "منذ ساعتين",
     views: "4.8k",
@@ -87,6 +91,7 @@ export const ALL_NEWS: Article[] = [
       "وأشار مهندسو المشروع إلى أن المنظومة الذكية الجديدة تتيح الرصد المباشر والصيانة الاستباقية للمحولات والألواح الشمسية بما يضمن استمرارية الضخ بأعلى كفاءة."
     ],
     gradient: "from-blue-950 via-sky-950 to-slate-900",
+    imageUrl: "/news/solar.png",
     author: "قسم التكنولوجيا",
     date: "منذ 3 ساعات",
     views: "1.9k",
@@ -106,6 +111,7 @@ export const ALL_NEWS: Article[] = [
       "وأكد المسئولون أن المجمع يوفر أكثر من 500 فرصة عمل مباشرة وغير مباشرة لشباب وسيدات أسوان، ممّا يساهم في دعم الاقتصاد المحلي والحفاظ على الهوية التراثية."
     ],
     gradient: "from-amber-950 via-slate-900 to-blue-900",
+    imageUrl: "/news/handicrafts.png",
     author: "محمد الأمين",
     date: "منذ 4 ساعات",
     views: "1.8k",
@@ -125,6 +131,7 @@ export const ALL_NEWS: Article[] = [
       "كما أشاد البيان بوعي المواطنين وتفاعلهم الإيجابي مع الخطط التنموية التي تسهم في بناء مستقبل أفضل للأجيال القادمة."
     ],
     gradient: "from-slate-900 via-purple-950 to-blue-950",
+    imageUrl: "/news/press.png",
     author: "محمد الأمين",
     date: "منذ 5 ساعات",
     views: "2.1k",
@@ -144,6 +151,7 @@ export const ALL_NEWS: Article[] = [
       "وشهدت التدريبات حضوراً مكثفاً لمشجعي ومحبي النادي لتقديم الدعم والمساندة للاعبين والجهاز الفني قبل خوض هذه المواجهة الحسمية."
     ],
     gradient: "from-blue-950 via-sky-950 to-slate-900",
+    imageUrl: "/news/corniche.png",
     author: "القسم الرياضي",
     date: "منذ 6 ساعات",
     views: "4.5k",
@@ -163,6 +171,7 @@ export const ALL_NEWS: Article[] = [
       "وتأتي هذه التطورات ضمن رؤية الترافق الرقمي للارتقاء بجودة الخدمات وتحقيق أعلى درجات الشفافية والسرعة."
     ],
     gradient: "from-red-950 via-slate-900 to-indigo-950",
+    imageUrl: "/news/solar.png",
     author: "قسم التكنولوجيا",
     date: "منذ 7 ساعات",
     views: "950",
@@ -182,6 +191,7 @@ export const ALL_NEWS: Article[] = [
       "وأكد خبراء التصدير أن التوسع في مشروعات التعبئة والتغليف الحديثة بالصعيد يسهم في تعظيم القيمة المضافة وفتح منافذ تصديرية جديدة."
     ],
     gradient: "from-slate-900 via-blue-950 to-emerald-950",
+    imageUrl: "/news/forum.png",
     author: "محمد الأمين",
     date: "منذ 8 ساعات",
     views: "1.2k",
@@ -201,6 +211,7 @@ export const ALL_NEWS: Article[] = [
       "ونستعرض خلال التحقيق شهادات الخبراء والمهندسين والشباب العاملين بالمشروع، وكيف أسهم في دعم الاقتصاد القومي وتخفيض الإنبعاثات الكربونية."
     ],
     gradient: "from-blue-900 via-slate-900 to-indigo-950",
+    imageUrl: "/news/solar.png",
     author: "محمد الأمين",
     date: "منذ 9 ساعات",
     views: "5.1k",

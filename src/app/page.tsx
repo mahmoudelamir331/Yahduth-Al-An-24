@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -76,20 +77,31 @@ export default function Home() {
         
         {/* Main Article Card (8 Columns) */}
         <Link href={`/news/${HeroMainArticle.id}`} className="lg:col-span-8 group bg-background border border-foreground/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col block">
-          <div className={`relative h-72 md:h-88 w-full bg-gradient-to-br ${HeroMainArticle.gradient} p-6 md:p-8 flex flex-col justify-between text-white overflow-hidden`}>
+          <div className="relative h-72 md:h-96 w-full overflow-hidden text-white flex flex-col justify-between p-6 md:p-8">
             
-            {/* Background Logo Watermark */}
-            <div className="absolute left-[-20px] bottom-[-20px] w-64 h-64 opacity-10 pointer-events-none">
-              <Image src="/logo.jpg" alt="Watermark" fill className="object-contain" />
-            </div>
+            {/* Real Background Photo */}
+            {HeroMainArticle.imageUrl ? (
+              <Image 
+                src={HeroMainArticle.imageUrl} 
+                alt={HeroMainArticle.title} 
+                fill 
+                className="object-cover group-hover:scale-105 transition-transform duration-500" 
+                priority
+              />
+            ) : (
+              <div className={`absolute inset-0 bg-gradient-to-br ${HeroMainArticle.gradient}`}></div>
+            )}
+
+            {/* Dark Overlay for Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
 
             <div className="flex justify-between items-start z-10">
-              <span className="bg-urgent text-white text-xs font-black px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 pulse-urgent">
+              <span className="bg-urgent text-white text-xs font-black px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 pulse-urgent">
                 <span className="w-2 h-2 rounded-full bg-white"></span>
                 خبر عاجل
               </span>
               
-              <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-xs font-bold">
+              <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-xs font-bold">
                 <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0">
                   <Image src="/logo.jpg" alt="لوجو" fill className="object-cover" />
                 </div>
@@ -98,15 +110,15 @@ export default function Home() {
             </div>
 
             <div className="space-y-3 z-10 mt-auto">
-              <h2 className="text-xl md:text-3xl font-black leading-tight group-hover:text-amber-300 transition-colors">
+              <h2 className="text-xl md:text-3xl lg:text-4xl font-black leading-tight group-hover:text-amber-300 transition-colors drop-shadow-md">
                 {HeroMainArticle.title}
               </h2>
-              <p className="text-xs md:text-sm text-slate-200 line-clamp-2 font-medium leading-relaxed">
+              <p className="text-xs md:text-sm text-slate-200 line-clamp-2 font-medium leading-relaxed drop-shadow">
                 {HeroMainArticle.excerpt}
               </p>
               
               <div className="flex items-center gap-3 text-xs text-slate-300 pt-2 font-bold flex-wrap">
-                <span className="flex items-center gap-1.5 bg-amber-400/20 text-amber-300 px-2.5 py-1 rounded-md border border-amber-400/30">
+                <span className="flex items-center gap-1.5 bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-lg shadow-sm">
                   <div className="relative w-3.5 h-3.5 rounded-full overflow-hidden shrink-0">
                     <Image src="/logo.jpg" alt="الصحفي" fill className="object-cover" />
                   </div>
@@ -142,12 +154,16 @@ export default function Home() {
 
           <div className="space-y-3">
             {HeroSubArticles.map((art) => (
-              <Link key={art.id} href={`/news/${art.id}`} className="bg-background border border-foreground/10 rounded-2xl p-3.5 flex gap-3 items-center hover:border-primary/40 hover:shadow-md transition-all duration-200 group cursor-pointer block">
-                <div className={`relative w-20 h-16 rounded-xl overflow-hidden shrink-0 bg-gradient-to-br ${art.gradient} p-2 text-white flex items-center justify-center`}>
-                  <div className="relative w-8 h-8 rounded-full opacity-30">
-                    <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
-                  </div>
+              <Link key={art.id} href={`/news/${art.id}`} className="bg-background border border-foreground/10 rounded-2xl p-3 flex gap-3 items-center hover:border-primary/40 hover:shadow-md transition-all duration-200 group cursor-pointer block">
+                
+                <div className="relative w-24 h-20 rounded-xl overflow-hidden shrink-0 bg-slate-900">
+                  {art.imageUrl ? (
+                    <Image src={art.imageUrl} alt={art.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                  ) : (
+                    <div className={`w-full h-full bg-gradient-to-br ${art.gradient}`}></div>
+                  )}
                 </div>
+
                 <div className="flex-1 space-y-1">
                   <span className="text-[10px] font-extrabold text-primary bg-primary/10 px-2 py-0.5 rounded">
                     {art.category}
@@ -209,13 +225,16 @@ export default function Home() {
             {filteredNews.map((item) => (
               <Link key={item.id} href={`/news/${item.id}`} className="bg-background border border-foreground/10 rounded-2xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-200 flex flex-col group block">
                 
-                {/* Lightweight Cover */}
-                <div className={`relative h-40 w-full bg-gradient-to-br ${item.gradient} p-4 flex flex-col justify-between text-white overflow-hidden`}>
-                  <div className="absolute left-[-10px] top-[-10px] w-28 h-28 opacity-15 pointer-events-none">
-                    <Image src="/logo.jpg" alt="Logo" fill className="object-contain" />
-                  </div>
-                  
-                  <span className="self-start bg-white/15 backdrop-blur-md text-white text-[11px] font-extrabold px-2.5 py-1 rounded-lg border border-white/20 shadow-sm z-10">
+                {/* Photo / Gradient Cover */}
+                <div className="relative h-44 w-full bg-slate-900 p-4 flex flex-col justify-between text-white overflow-hidden">
+                  {item.imageUrl ? (
+                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                  ) : (
+                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`}></div>
+                  )}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                  <span className="self-start bg-black/60 backdrop-blur-md text-white text-[11px] font-extrabold px-2.5 py-1 rounded-lg border border-white/20 shadow-sm z-10">
                     {item.category}
                   </span>
 
