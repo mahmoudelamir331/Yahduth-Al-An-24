@@ -46,10 +46,6 @@ export default function AboutPage() {
             <Image src="/logo.jpg" alt="محمد الأمين" fill className="object-cover" />
           </div>
           <div className="space-y-2 text-center md:text-right">
-            <div className="inline-flex items-center gap-1.5 text-xs font-black bg-primary/10 text-primary px-3 py-1 rounded-full">
-              <UserCheck className="w-4 h-4" />
-              <span>مؤسس المنصة والمحرر المسؤول</span>
-            </div>
             <h2 className="text-2xl font-black text-foreground">المراسل الصحفي / محمد الأمين</h2>
             <p className="text-xs text-foreground/60 font-bold">
               صحفي ومراسل ميداني متخصص في تغطية مشروعات وتطورات الجنوب ومحافظة أسوان.
