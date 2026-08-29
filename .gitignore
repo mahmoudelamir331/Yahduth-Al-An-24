@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/yahduth-news
 /.pnp
 .pnp.*
 .yarn/*
