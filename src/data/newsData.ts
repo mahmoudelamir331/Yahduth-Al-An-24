@@ -151,7 +151,7 @@ export const ALL_NEWS: Article[] = [
       "وشهدت التدريبات حضوراً مكثفاً لمشجعي ومحبي النادي لتقديم الدعم والمساندة للاعبين والجهاز الفني قبل خوض هذه المواجهة الحسمية."
     ],
     gradient: "from-blue-950 via-sky-950 to-slate-900",
-    imageUrl: "/news/corniche.png",
+    imageUrl: "/news/sports.png",
     author: "القسم الرياضي",
     date: "منذ 6 ساعات",
     views: "4.5k",
@@ -171,7 +171,7 @@ export const ALL_NEWS: Article[] = [
       "وتأتي هذه التطورات ضمن رؤية الترافق الرقمي للارتقاء بجودة الخدمات وتحقيق أعلى درجات الشفافية والسرعة."
     ],
     gradient: "from-red-950 via-slate-900 to-indigo-950",
-    imageUrl: "/news/solar.png",
+    imageUrl: "/news/digital.png",
     author: "قسم التكنولوجيا",
     date: "منذ 7 ساعات",
     views: "950",
@@ -191,7 +191,7 @@ export const ALL_NEWS: Article[] = [
       "وأكد خبراء التصدير أن التوسع في مشروعات التعبئة والتغليف الحديثة بالصعيد يسهم في تعظيم القيمة المضافة وفتح منافذ تصديرية جديدة."
     ],
     gradient: "from-slate-900 via-blue-950 to-emerald-950",
-    imageUrl: "/news/forum.png",
+    imageUrl: "/news/dates.png",
     author: "محمد الأمين",
     date: "منذ 8 ساعات",
     views: "1.2k",
@@ -211,7 +211,7 @@ export const ALL_NEWS: Article[] = [
       "ونستعرض خلال التحقيق شهادات الخبراء والمهندسين والشباب العاملين بالمشروع، وكيف أسهم في دعم الاقتصاد القومي وتخفيض الإنبعاثات الكربونية."
     ],
     gradient: "from-blue-900 via-slate-900 to-indigo-950",
-    imageUrl: "/news/solar.png",
+    imageUrl: "/news/renewable.png",
     author: "محمد الأمين",
     date: "منذ 9 ساعات",
     views: "5.1k",
