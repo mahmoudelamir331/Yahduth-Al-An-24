@@ -92,17 +92,31 @@ export function Header() {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 font-bold text-foreground/80 text-sm">
-            {Categories.map((cat) => (
-              <Link 
-                key={cat.name} 
-                href={cat.href} 
-                className="px-3 py-2 rounded-lg hover:text-primary hover:bg-primary/5 transition-all duration-200"
-              >
-                {cat.name}
-              </Link>
-            ))}
-          </nav>
+          <div className="hidden lg:flex items-center gap-1 font-bold text-xs">
+            <Link href="/" className="px-3 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all">
+              الرئيسية
+            </Link>
+            <Link href="/category/aswan" className="px-3 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-primary"></span>
+              أخبار أسوان
+            </Link>
+            <Link href="/category/urgent" className="px-3 py-2 rounded-xl text-urgent font-extrabold hover:bg-urgent/10 transition-all flex items-center gap-1">
+              <span className="w-2 h-2 rounded-full bg-urgent animate-pulse"></span>
+              عاجل
+            </Link>
+            <Link href="/category/politics" className="px-3 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all">
+              سياسة واقتصاد
+            </Link>
+            <Link href="/category/reports" className="px-3 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all">
+              تحقيقات وحوارات
+            </Link>
+            <Link href="/about" className="px-3 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all">
+              من نحن
+            </Link>
+            <Link href="/contact" className="px-3 py-2 rounded-xl text-primary font-black bg-primary/10 hover:bg-primary hover:text-white transition-all">
+              اتصل بنا
+            </Link>
+          </div>
 
           {/* Actions Left */}
           <div className="flex items-center gap-2 md:gap-3">
