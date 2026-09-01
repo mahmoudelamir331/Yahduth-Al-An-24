@@ -23,7 +23,7 @@ export default function Home() {
 
   useEffect(() => {
     let cancelled = false;
-    void loadPublicData().then((result) => {
+    const refresh = () => loadPublicData().then((result) => {
       if (cancelled || !result) return;
       if (result.articles.length > 0) setNews(result.articles);
       if (result.settings) {
@@ -36,7 +36,9 @@ export default function Home() {
     }).catch(() => {
       // البيانات المحلية تظل ظاهرة لو إعدادات Supabase غير متاحة مؤقتاً.
     });
-    return () => { cancelled = true; };
+    void refresh();
+    const timer = window.setInterval(refresh, 15000);
+    return () => { cancelled = true; window.clearInterval(timer); };
   }, []);
 
   const HeroMainArticle = news[0] ?? ALL_NEWS[0];
