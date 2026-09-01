@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Eye, TrendingUp, MapPin } from "lucide-react";
 import { ALL_NEWS } from "@/data/newsData";
 import { LiveMediaSection } from "@/components/LiveMediaSection";
-
-const HeroMainArticle = ALL_NEWS[0];
-const HeroSubArticles = ALL_NEWS.slice(1, 4);
-const AllNewsList = ALL_NEWS.slice(4);
+import { loadPublicData } from "@/lib/supabase-browser";
 
 const TrendingSidebar = [
   { id: 1, title: "قرار عاجل بشأن خطة رفع كفاءة الطرق السريعة بين أسوان والأقصر", views: "12.4k" },
@@ -21,6 +18,30 @@ const TrendingSidebar = [
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("الكل");
+  const [news, setNews] = useState(ALL_NEWS);
+  const [maintenance, setMaintenance] = useState<{ enabled: boolean; message: string; endsAt: string | null }>({ enabled: false, message: "", endsAt: null });
+
+  useEffect(() => {
+    let cancelled = false;
+    void loadPublicData().then((result) => {
+      if (cancelled || !result) return;
+      if (result.articles.length > 0) setNews(result.articles);
+      if (result.settings) {
+        setMaintenance({
+          enabled: Boolean(result.settings.maintenance_enabled),
+          message: result.settings.maintenance_message || "الموقع تحت الصيانة حالياً. سنعود قريباً.",
+          endsAt: result.settings.maintenance_ends_at,
+        });
+      }
+    }).catch(() => {
+      // البيانات المحلية تظل ظاهرة لو إعدادات Supabase غير متاحة مؤقتاً.
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const HeroMainArticle = news[0] ?? ALL_NEWS[0];
+  const HeroSubArticles = news.slice(1, 4);
+  const AllNewsList = news.slice(4);
 
   const categories = ["الكل", "أخبار أسوان", "سياسة", "اقتصاد", "رياضة", "تكنولوجيا", "تحقيقات"];
 
@@ -30,6 +51,12 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-12">
+      {maintenance.enabled && (
+        <section className="rounded-2xl border border-amber-400/40 bg-amber-500/10 px-5 py-4 text-center text-sm font-bold text-amber-800 dark:text-amber-200">
+          <p>{maintenance.message}</p>
+          {maintenance.endsAt && <p className="mt-1 text-xs opacity-80">موعد العودة المتوقع: {new Date(maintenance.endsAt).toLocaleString("ar-EG")}</p>}
+        </section>
+      )}
       
       {/* General Site Banner */}
       <section className="bg-gradient-to-r from-primary via-primary/95 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10">
