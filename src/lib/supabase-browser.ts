@@ -62,7 +62,7 @@ export async function loadPublicData() {
       .order("published_at", { ascending: false }),
     supabase
       .from("site_settings")
-      .select("maintenance_enabled,maintenance_message,maintenance_ends_at")
+      .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams")
       .eq("id", true)
       .maybeSingle(),
   ]);
