@@ -56,7 +56,7 @@ export function Header() {
               مباشر 🔴
             </span>
             <span className="truncate font-bold text-slate-300">
-              بوابة إخبارية صحفية مستتقلة برئاسة الصحفي محمد الأمين
+              بوابة إخبارية صحفية مستقلة — أسوان وصعيد مصر
             </span>
           </div>
 
@@ -95,7 +95,7 @@ export function Header() {
                 </span>
               </div>
               <span className="text-[10px] sm:text-[11px] font-bold text-foreground/70 tracking-wide mt-0.5">
-                بأسوان / محمد الأمين
+                بوابة إخبارية صحفية مستقلة 24/7
               </span>
             </div>
           </Link>
@@ -167,7 +167,7 @@ export function Header() {
                 </div>
                 <div className="text-xs">
                   <strong className="text-primary block font-black text-sm">يحدث الآن 24</strong>
-                  <span className="text-foreground/70 font-bold">بوابة المراسل الصحفي محمد الأمين</span>
+                  <span className="text-foreground/70 font-bold">بوابة إخبارية صحفية مستقلة</span>
                 </div>
               </div>
               

@@ -24,7 +24,7 @@ export function Footer() {
             </div>
 
             <p className="text-xs text-foreground/70 leading-relaxed font-bold">
-              تغطية صحفية مستقلة ومباشرة لجميع أحداث وتطورات محافظة أسوان وصعيد مصر والعالم لحظة بلحظة برئاسة الصحفي محمد الأمين.
+              تغطية صحفية مستقلة ومباشرة لجميع أحداث وتطورات محافظة أسوان وصعيد مصر والعالم لحظة بلحظة.
             </p>
 
             <div className="flex items-center gap-2 pt-1 text-xs text-foreground/70 font-bold">
@@ -119,8 +119,8 @@ export function Footer() {
                   <Image src="/logo.jpg" alt="محمد الأمين" fill className="object-cover" />
                 </div>
                 <div>
-                  <h5 className="text-xs font-black text-foreground">المراسل الصحفي / محمد الأمين</h5>
-                  <span className="text-[10px] text-primary font-bold block">مؤسس المنصة ورئيس التحرير</span>
+                  <h5 className="text-xs font-black text-foreground">هيئة التحرير — يحدث الآن 24</h5>
+                  <span className="text-[10px] text-primary font-bold block">مؤسسو المنصة وإدارة التحرير</span>
                 </div>
               </div>
               <p className="text-[11px] text-foreground/60 leading-relaxed font-bold">
@@ -141,7 +141,7 @@ export function Footer() {
         {/* Bottom Copyright Bar */}
         <div className="pt-6 border-t border-foreground/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-bold text-foreground/60">
           <p className="text-center sm:text-right">
-            جميع الحقوق محفوظة © {new Date().getFullYear()} - بوابة <strong className="text-primary font-black">يحدث الآن 24</strong> (الصحفي محمد الأمين)
+            جميع الحقوق محفوظة © {new Date().getFullYear()} - بوابة <strong className="text-primary font-black">يحدث الآن 24</strong> الإخبارية
           </p>
           <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-primary transition-colors">الخصوصية</Link>
