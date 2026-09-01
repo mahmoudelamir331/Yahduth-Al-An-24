@@ -18,7 +18,7 @@ interface VideoItem {
 const REAL_NEWS_STREAMS: VideoItem[] = [
   {
     id: "1",
-    youtubeId: "bNyUyrR0PHo", // Al Jazeera Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=bNyUyrR0PHo", // Al Jazeera Live Stream
     title: "بث مباشر: تغطية صحفية وإخبارية شاملة لكافة الأحداث والتقارير الميدانية 24/7",
     channel: "الجزيرة الإخبارية مباشر",
     duration: "مباشر 🔴",
@@ -27,7 +27,7 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
   {
     id: "2",
-    youtubeId: "mX2_tA-vGMo", // Extra News Egypt Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=mX2_tA-vGMo", // Extra News Egypt Live Stream
     title: "بث مباشر: إكسترا نيوز - متابعات ميدانية ونشرات أخبار مصر والصعيد على مدار الساعة",
     channel: "إكسترا نيوز مصر",
     duration: "مباشر 🔴",
@@ -36,7 +36,7 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
   {
     id: "3",
-    youtubeId: "x9J2k0o0xGE", // Al Arabiya Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=x9J2k0o0xGE", // Al Arabiya Live Stream
     title: "بث مباشر: النشرات الإخبارية والتغطيات الاقتصادية والميدانية المباشرة",
     channel: "العربية الحدث",
     duration: "مباشر 🔴",
@@ -45,7 +45,7 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
   {
     id: "4",
-    youtubeId: "2g811Eo7K8U", // Sky News Arabia Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=2g811Eo7K8U", // Sky News Arabia Live Stream
     title: "بث مباشر: سكاي نيوز عربية - تغطية شاملة للأخبار العاجلة والتحليلات الإخبارية",
     channel: "سكاي نيوز عربية",
     duration: "مباشر 🔴",
