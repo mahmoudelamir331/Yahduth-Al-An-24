@@ -35,6 +35,14 @@ html, body {
   padding: 0;
 }
 
+html.content-protected body {
+  user-select: none;
+}
+
+html.content-protected img {
+  -webkit-user-drag: none;
+}
+
 /* Hide scrollbars for clean mobile UX */
 .no-scrollbar::-webkit-scrollbar {
   display: none;

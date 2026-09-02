@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Search, Menu, X, Moon, Sun, Calendar, Radio } from "lucide-react";
 import { useTheme } from "next-themes";
+import type { PublicCategory } from "@/lib/siteSettings";
 
 const TickerNews = [
   "المراسل الصحفي محمد الأمين يكشف عن مشروعات جديدة بمحافظة أسوان",
@@ -26,7 +27,7 @@ const NavCategories = [
   { name: "اتصل بنا", href: "/contact" },
 ];
 
-export function Header() {
+export function Header({ categories }: { categories: PublicCategory[] }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -75,12 +76,12 @@ export function Header() {
           
           {/* Logo & Publisher Branding */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-2xl overflow-hidden border-2 border-primary shadow-sm bg-primary/10 group-hover:scale-105 transition-transform duration-200">
+            <div className="relative w-11 h-10 sm:w-14 sm:h-12 rounded-2xl overflow-hidden border-2 border-primary shadow-sm bg-primary/10 group-hover:scale-105 transition-transform duration-200">
               <Image
                 src="/logo.jpg"
                 alt="شعار يحدث الآن 24"
                 fill
-                className="object-cover"
+                className="object-contain h-auto max-w-full"
                 priority
               />
             </div>
@@ -102,6 +103,11 @@ export function Header() {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1 font-bold text-xs">
+            {categories.map((category) => (
+              <Link key={category.slug} href={`/category/${category.slug}`} className="px-2.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all">{category.name}</Link>
+            ))}
+          </nav>
+          <nav className="hidden">
             <Link href="/" className="px-2.5 py-2 rounded-xl text-foreground hover:text-primary hover:bg-foreground/5 transition-all">
               الرئيسية
             </Link>
@@ -172,7 +178,7 @@ export function Header() {
               </div>
               
               <div className="grid grid-cols-2 gap-2 pt-1">
-                {NavCategories.map((cat) => (
+                {[{ name: "الرئيسية", href: "/" }, ...categories.map((category) => ({ name: category.name, href: `/category/${category.slug}` })), { name: "من نحن", href: "/about" }, { name: "اتصل بنا", href: "/contact" }].map((cat) => (
                   <Link
                     key={cat.name}
                     href={cat.href}
