@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { loadPublicData } from "@/lib/supabase-browser";
 import Image from "next/image";
 import { Play, Radio, Video, Eye, Clock } from "lucide-react";
 
@@ -17,7 +18,7 @@ interface VideoItem {
 const REAL_NEWS_STREAMS: VideoItem[] = [
   {
     id: "1",
-    youtubeId: "bNyUyrR0PHo", // Al Jazeera Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=bNyUyrR0PHo", // Al Jazeera Live Stream
     title: "بث مباشر: تغطية صحفية وإخبارية شاملة لكافة الأحداث والتقارير الميدانية 24/7",
     channel: "الجزيرة الإخبارية مباشر",
     duration: "مباشر 🔴",
@@ -26,7 +27,7 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
   {
     id: "2",
-    youtubeId: "mX2_tA-vGMo", // Extra News Egypt Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=mX2_tA-vGMo", // Extra News Egypt Live Stream
     title: "بث مباشر: إكسترا نيوز - متابعات ميدانية ونشرات أخبار مصر والصعيد على مدار الساعة",
     channel: "إكسترا نيوز مصر",
     duration: "مباشر 🔴",
@@ -35,7 +36,7 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
   {
     id: "3",
-    youtubeId: "x9J2k0o0xGE", // Al Arabiya Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=x9J2k0o0xGE", // Al Arabiya Live Stream
     title: "بث مباشر: النشرات الإخبارية والتغطيات الاقتصادية والميدانية المباشرة",
     channel: "العربية الحدث",
     duration: "مباشر 🔴",
@@ -44,7 +45,7 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
   {
     id: "4",
-    youtubeId: "2g811Eo7K8U", // Sky News Arabia Live Stream
+    youtubeId: "https://www.youtube.com/watch?v=2g811Eo7K8U", // Sky News Arabia Live Stream
     title: "بث مباشر: سكاي نيوز عربية - تغطية شاملة للأخبار العاجلة والتحليلات الإخبارية",
     channel: "سكاي نيوز عربية",
     duration: "مباشر 🔴",
@@ -53,9 +54,37 @@ const REAL_NEWS_STREAMS: VideoItem[] = [
   },
 ];
 
+function getYoutubeEmbedUrl(value: string) {
+  try {
+    const url = new URL(value);
+    if (url.hostname.includes("youtu.be")) return `https://www.youtube.com/embed/${url.pathname.slice(1)}`;
+    if (url.hostname.includes("youtube.com")) {
+      const id = url.searchParams.get("v");
+      if (id) return `https://www.youtube.com/embed/${id}`;
+      if (url.pathname.includes("/live/")) return `https://www.youtube.com/embed/${url.pathname.split("/live/")[1].split("/")[0]}`;
+      if (url.pathname.includes("/embed/")) return value;
+    }
+  } catch { return null; }
+  return null;
+}
+
 export function LiveMediaSection() {
   const [isLive, setIsLive] = useState<boolean>(true);
+  const [streams, setStreams] = useState<VideoItem[]>(REAL_NEWS_STREAMS);
   const [activeVideo, setActiveVideo] = useState<VideoItem>(REAL_NEWS_STREAMS[0]);
+
+  useEffect(() => {
+    let cancelled = false;
+    loadPublicData().then((result) => {
+      const data = result?.settings;
+      if (cancelled || !Array.isArray(data?.live_streams)) return;
+      const next = (data.live_streams as Array<{ id: string; youtubeId: string; title: string; channel: string; enabled: boolean }>)
+        .filter((item) => item.enabled !== false && item.youtubeId && item.title && item.channel)
+        .map((item) => ({ ...item, duration: "مباشر 🔴", date: "الآن", views: "متابعة مباشرة" }));
+      if (next.length) { setStreams(next); setActiveVideo(next[0]); }
+    }).catch(() => undefined);
+    return () => { cancelled = true; };
+  }, []);
 
   return (
     <section className="space-y-4 pt-4">
@@ -107,13 +136,21 @@ export function LiveMediaSection() {
 
           {/* Real Live News YouTube Player Embed */}
           <div className="relative aspect-video w-full bg-slate-900">
-            <iframe
-              src={`https://www.youtube.com/embed/${activeVideo.youtubeId}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1`}
-              title={activeVideo.title}
-              className="w-full h-full border-0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+            {getYoutubeEmbedUrl(activeVideo.youtubeId) ? (
+              <iframe
+                src={`${getYoutubeEmbedUrl(activeVideo.youtubeId)}?autoplay=1&mute=1&controls=1&rel=0&modestbranding=1`}
+                title={activeVideo.title}
+                className="w-full h-full border-0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-4 p-6 text-center text-white">
+                <Radio className="w-10 h-10 text-urgent animate-pulse" />
+                <p className="font-bold">البث متاح على منصة {activeVideo.channel}</p>
+                <a href={activeVideo.youtubeId} target="_blank" rel="noreferrer" className="bg-primary hover:bg-primary/80 rounded-xl px-5 py-3 font-bold transition-colors">فتح البث المباشر</a>
+              </div>
+            )}
           </div>
 
           {/* Video Title Bar Below */}
@@ -138,11 +175,11 @@ export function LiveMediaSection() {
               <Radio className="w-4 h-4 text-urgent" />
               قنوات البث المباشر المتاحة
             </h4>
-            <span className="text-[11px] font-bold text-foreground/50">{REAL_NEWS_STREAMS.length} قنوات</span>
+            <span className="text-[11px] font-bold text-foreground/50">{streams.length} قنوات</span>
           </div>
 
           <div className="space-y-3 max-h-[420px] overflow-y-auto pr-1 no-scrollbar">
-            {REAL_NEWS_STREAMS.map((item) => {
+            {streams.map((item) => {
               const isActive = activeVideo.id === item.id;
               return (
                 <button

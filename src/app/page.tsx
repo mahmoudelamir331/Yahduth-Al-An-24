@@ -1,15 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Clock, Eye, TrendingUp, MapPin } from "lucide-react";
 import { ALL_NEWS } from "@/data/newsData";
 import { LiveMediaSection } from "@/components/LiveMediaSection";
-
-const HeroMainArticle = ALL_NEWS[0];
-const HeroSubArticles = ALL_NEWS.slice(1, 4);
-const AllNewsList = ALL_NEWS.slice(4);
+import { loadPublicData } from "@/lib/supabase-browser";
 
 const TrendingSidebar = [
   { id: 1, title: "قرار عاجل بشأن خطة رفع كفاءة الطرق السريعة بين أسوان والأقصر", views: "12.4k" },
@@ -21,12 +18,57 @@ const TrendingSidebar = [
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("الكل");
+  const [news, setNews] = useState(ALL_NEWS);
+  const [maintenance, setMaintenance] = useState<{ enabled: boolean; message: string; endsAt: string | null }>({ enabled: false, message: "", endsAt: null });
+  const [maintenanceReady, setMaintenanceReady] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    const refresh = () => loadPublicData().then((result) => {
+      if (cancelled || !result) { if (!cancelled) setMaintenanceReady(true); return; }
+      if (result.articles.length > 0) setNews(result.articles);
+      if (result.settings) {
+        setMaintenance({
+          enabled: Boolean(result.settings.maintenance_enabled),
+          message: result.settings.maintenance_message || "الموقع تحت الصيانة حالياً. سنعود قريباً.",
+          endsAt: result.settings.maintenance_ends_at,
+        });
+      }
+      setMaintenanceReady(true);
+    }).catch(() => {
+      if (!cancelled) setMaintenanceReady(true);
+    });
+    void refresh();
+    const timer = window.setInterval(refresh, 15000);
+    return () => { cancelled = true; window.clearInterval(timer); };
+  }, []);
+
+  const HeroMainArticle = news[0] ?? ALL_NEWS[0];
+  const HeroSubArticles = news.slice(1, 4);
+  const AllNewsList = news.slice(4);
 
   const categories = ["الكل", "أخبار أسوان", "سياسة", "اقتصاد", "رياضة", "تكنولوجيا", "تحقيقات"];
 
   const filteredNews = activeTab === "الكل" 
     ? AllNewsList 
     : AllNewsList.filter((n) => n.category.includes(activeTab));
+
+  if (!maintenanceReady) {
+    return <main className="min-h-screen grid place-items-center bg-slate-950 text-white" dir="rtl"><div className="animate-pulse text-sm opacity-80">جارٍ التحقق من حالة الموقع...</div></main>;
+  }
+
+  if (maintenance.enabled) {
+    return <main className="fixed inset-0 z-[9999] min-h-screen overflow-auto grid place-items-center bg-gradient-to-br from-slate-950 via-teal-950 to-slate-900 px-6 text-white" dir="rtl">
+      <section className="w-full max-w-2xl rounded-3xl border border-white/15 bg-white/10 p-8 md:p-12 text-center shadow-2xl backdrop-blur-xl">
+        <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-3xl border border-white/20 shadow-xl"><Image src="/logo.jpg" alt="يحدث الآن 24" width={96} height={96} className="h-full w-full object-cover" priority /></div>
+        <div className="mx-auto mb-5 h-3 w-3 animate-pulse rounded-full bg-amber-400 shadow-[0_0_24px_8px_rgba(251,191,36,0.35)]" />
+        <h1 className="text-3xl font-black md:text-5xl">الموقع تحت الصيانة</h1>
+        <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-slate-200">{maintenance.message}</p>
+        {maintenance.endsAt && <p className="mt-6 rounded-2xl bg-black/20 px-4 py-3 text-sm font-bold text-amber-200">موعد العودة المتوقع: {new Date(maintenance.endsAt).toLocaleString("ar-EG")}</p>}
+        <p className="mt-8 text-xs text-slate-400">نرجعلكم قريبًا بتغطيات وأخبار جديدة.</p>
+      </section>
+    </main>;
+  }
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-12">
