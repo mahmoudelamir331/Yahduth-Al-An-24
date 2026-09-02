@@ -81,7 +81,7 @@ export function Header({ categories }: { categories: PublicCategory[] }) {
                 src="/brand-logo.jpg"
                 alt="شعار يحدث الآن 24"
                 fill
-                className="object-contain h-auto max-w-full"
+                className="object-contain"
                 priority
               />
             </div>
