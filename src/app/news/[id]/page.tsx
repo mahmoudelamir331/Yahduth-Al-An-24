@@ -91,7 +91,7 @@ export default function NewsDetailPage({ params }: PageProps) {
           
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-primary/30 shrink-0 shadow-md">
-              <Image src="/logo.jpg" alt="محمد الأمين" fill className="object-cover" />
+              <Image src="/brand-logo.jpg" alt="محمد الأمين" fill className="object-cover" />
             </div>
             <div>
               <div className="flex items-center gap-1 text-foreground font-black text-sm">
@@ -205,7 +205,7 @@ export default function NewsDetailPage({ params }: PageProps) {
         <div className="relative z-10 flex items-center justify-between gap-4 flex-wrap">
           <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3.5 py-2 rounded-xl border border-white/20 text-xs font-bold">
             <div className="relative w-5 h-5 rounded-full overflow-hidden shrink-0 border border-amber-300">
-              <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+              <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
             </div>
             <span>تغطية خاصة - يحدث الآن 24</span>
           </div>
@@ -310,7 +310,7 @@ export default function NewsDetailPage({ params }: PageProps) {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative w-8 h-8 rounded-xl overflow-hidden border-2 border-primary/30 shrink-0 shadow-sm">
-              <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+              <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-black text-foreground">أخبار وتقارير مقترحة</h3>
@@ -329,7 +329,7 @@ export default function NewsDetailPage({ params }: PageProps) {
 
                 <div className="flex items-center gap-1 text-[9px] text-slate-200 font-bold z-10">
                   <div className="relative w-3 h-3 rounded-full overflow-hidden shrink-0 border border-white/40">
-                    <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+                    <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
                   </div>
                   <span>يحدث الآن 24</span>
                 </div>

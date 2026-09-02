@@ -41,7 +41,7 @@ export default function ContactPage() {
           </p>
         </div>
         <div className="relative w-28 h-28 rounded-2xl overflow-hidden border-2 border-white/20 shrink-0 shadow-lg">
-          <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+          <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
         </div>
       </div>
 
@@ -164,7 +164,7 @@ export default function ContactPage() {
               فريق تحرير متخصص في تغطية أحداث أسوان والصعيد لحظة بلحظة بكل حيادية وإتقان.
             </p>
             <div className="relative w-full h-12">
-              <Image src="/logo.jpg" alt="يحدث الآن 24" fill className="object-contain object-right" />
+              <Image src="/brand-logo.jpg" alt="يحدث الآن 24" fill className="object-contain object-right" />
             </div>
           </div>
 

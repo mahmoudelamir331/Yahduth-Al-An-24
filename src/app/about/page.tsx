@@ -35,7 +35,7 @@ export default function AboutPage() {
         </div>
 
         <div className="relative w-36 h-36 md:w-44 md:h-44 rounded-3xl overflow-hidden border-4 border-white/20 shadow-2xl shrink-0 bg-primary/20">
-          <Image src="/logo.jpg" alt="Logo" fill className="object-cover" priority />
+          <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" priority />
         </div>
       </div>
 
@@ -43,7 +43,7 @@ export default function AboutPage() {
       <div className="bg-background border border-foreground/10 rounded-3xl p-6 md:p-10 shadow-lg space-y-6">
         <div className="flex flex-col md:flex-row items-center gap-6 border-b border-foreground/10 pb-8">
           <div className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-amber-400 shadow-md shrink-0">
-            <Image src="/logo.jpg" alt="محمد الأمين" fill className="object-cover" />
+            <Image src="/brand-logo.jpg" alt="محمد الأمين" fill className="object-cover" />
           </div>
           <div className="space-y-2 text-center md:text-right">
             <h2 className="text-2xl font-black text-foreground">المراسل الصحفي / محمد الأمين</h2>

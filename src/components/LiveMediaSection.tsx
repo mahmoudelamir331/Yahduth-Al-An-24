@@ -192,7 +192,7 @@ export function LiveMediaSection() {
                   }`}
                 >
                   <div className="relative w-16 h-14 rounded-xl overflow-hidden shrink-0 bg-slate-900 flex items-center justify-center border border-white/20">
-                    <Image src="/logo.jpg" alt="Channel Logo" fill className="object-cover opacity-50 group-hover:scale-105 transition-transform" />
+                    <Image src="/brand-logo.jpg" alt="Channel Logo" fill className="object-cover opacity-50 group-hover:scale-105 transition-transform" />
                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
                       <div className={`p-1.5 rounded-full ${isActive ? "bg-urgent text-white" : "bg-white/20 text-white"}`}>
                         <Play className="w-3.5 h-3.5 fill-current" />

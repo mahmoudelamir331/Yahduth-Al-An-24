@@ -15,7 +15,7 @@ export function Footer() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-primary shadow-sm shrink-0 bg-primary/10">
-                <Image src="/logo.jpg" alt="Logo" fill className="object-cover" priority />
+                <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" priority />
               </div>
               <div>
                 <h3 className="font-black text-lg text-primary">يحدث الآن 24</h3>
@@ -116,7 +116,7 @@ export function Footer() {
             <div className="space-y-2">
               <div className="flex items-center gap-2.5">
                 <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-primary/20 shrink-0">
-                  <Image src="/logo.jpg" alt="محمد الأمين" fill className="object-cover" />
+                  <Image src="/brand-logo.jpg" alt="محمد الأمين" fill className="object-cover" />
                 </div>
                 <div>
                   <h5 className="text-xs font-black text-foreground">هيئة التحرير — يحدث الآن 24</h5>

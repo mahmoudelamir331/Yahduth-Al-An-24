@@ -61,7 +61,7 @@ function SearchResultsContent() {
           </div>
 
           <div className="relative w-16 h-16 rounded-2xl overflow-hidden border-2 border-white/20 shrink-0 shadow-md">
-            <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+            <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
           </div>
         </div>
 
@@ -105,7 +105,7 @@ function SearchResultsContent() {
               {/* Cover */}
               <div className={`relative h-44 w-full bg-gradient-to-br ${item.gradient} p-4 flex flex-col justify-between text-white overflow-hidden`}>
                 <div className="absolute left-[-10px] top-[-10px] w-28 h-28 opacity-15 pointer-events-none">
-                  <Image src="/logo.jpg" alt="Logo" fill className="object-contain" />
+                  <Image src="/brand-logo.jpg" alt="Logo" fill className="object-contain" />
                 </div>
                 
                 <span className="self-start bg-white/20 text-white text-[11px] font-black px-2.5 py-1 rounded-xl border border-white/20">
@@ -114,7 +114,7 @@ function SearchResultsContent() {
 
                 <div className="flex items-center gap-1.5 text-[10px] text-slate-200 font-bold z-10">
                   <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-white/40">
-                    <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+                    <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
                   </div>
                   <span>يحدث الآن 24</span>
                 </div>

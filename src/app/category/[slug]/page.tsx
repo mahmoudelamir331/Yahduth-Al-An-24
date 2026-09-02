@@ -70,7 +70,7 @@ export default function CategoryPage({ params }: PageProps) {
         </div>
 
         <div className="relative w-24 h-24 md:w-32 md:h-32 rounded-3xl overflow-hidden border-4 border-white/20 shrink-0 shadow-2xl bg-primary/20">
-          <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+          <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
         </div>
       </div>
 
@@ -88,7 +88,7 @@ export default function CategoryPage({ params }: PageProps) {
                 {/* Image / Gradient Cover */}
                 <div className={`relative h-48 w-full bg-gradient-to-br ${item.gradient} p-4 flex flex-col justify-between text-white overflow-hidden`}>
                   <div className="absolute left-[-10px] top-[-10px] w-28 h-28 opacity-15 pointer-events-none">
-                    <Image src="/logo.jpg" alt="Logo" fill className="object-contain" />
+                    <Image src="/brand-logo.jpg" alt="Logo" fill className="object-contain" />
                   </div>
                   
                   <div className="flex items-center justify-between z-10">
@@ -104,7 +104,7 @@ export default function CategoryPage({ params }: PageProps) {
 
                   <div className="flex items-center gap-1.5 text-[10px] text-slate-200 font-bold z-10">
                     <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-white/40">
-                      <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+                      <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
                     </div>
                     <span>يحدث الآن 24</span>
                   </div>

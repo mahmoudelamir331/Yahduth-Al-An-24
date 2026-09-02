@@ -60,7 +60,7 @@ export default function Home() {
   if (maintenance.enabled) {
     return <main className="fixed inset-0 z-[9999] min-h-screen overflow-auto grid place-items-center bg-gradient-to-br from-slate-950 via-teal-950 to-slate-900 px-6 text-white" dir="rtl">
       <section className="w-full max-w-2xl rounded-3xl border border-white/15 bg-white/10 p-8 md:p-12 text-center shadow-2xl backdrop-blur-xl">
-        <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-3xl border border-white/20 shadow-xl"><Image src="/logo.jpg" alt="يحدث الآن 24" width={96} height={96} className="h-full w-full object-cover" priority /></div>
+        <div className="mx-auto mb-6 h-24 w-24 overflow-hidden rounded-3xl border border-white/20 shadow-xl"><Image src="/brand-logo.jpg" alt="يحدث الآن 24" width={96} height={96} className="h-full w-full object-cover" priority /></div>
         <div className="mx-auto mb-5 h-3 w-3 animate-pulse rounded-full bg-amber-400 shadow-[0_0_24px_8px_rgba(251,191,36,0.35)]" />
         <h1 className="text-3xl font-black md:text-5xl">الموقع تحت الصيانة</h1>
         <p className="mx-auto mt-5 max-w-xl text-base leading-8 text-slate-200">{maintenance.message}</p>
@@ -78,7 +78,7 @@ export default function Home() {
         <div className="space-y-3 max-w-2xl text-center md:text-right z-10">
           <div className="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 border border-amber-400/30 px-3 py-1 rounded-full text-xs font-extrabold">
             <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0 border border-amber-300">
-              <Image src="/logo.jpg" alt="لوجو" fill className="object-cover" />
+              <Image src="/brand-logo.jpg" alt="لوجو" fill className="object-cover" />
             </div>
             <span>موقع يحدث الآن 24 الإخباري</span>
           </div>
@@ -95,7 +95,7 @@ export default function Home() {
             </span>
             <span className="flex items-center gap-2 bg-amber-400 text-slate-950 px-3 py-1 rounded-lg font-black shadow-sm">
               <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0">
-                <Image src="/logo.jpg" alt="يحدث الآن 24" fill className="object-cover" />
+                <Image src="/brand-logo.jpg" alt="يحدث الآن 24" fill className="object-cover" />
               </div>
               يحدث الآن 24
             </span>
@@ -105,7 +105,7 @@ export default function Home() {
         {/* Featured Logo Emblem */}
         <div className="relative w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl shrink-0 bg-primary/20 group">
           <Image
-            src="/logo.jpg"
+            src="/brand-logo.jpg"
             alt="شعار موقع يحدث الآن 24"
             fill
             className="object-cover group-hover:scale-105 transition-transform duration-300"
@@ -145,7 +145,7 @@ export default function Home() {
               
               <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-xs font-bold">
                 <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0">
-                  <Image src="/logo.jpg" alt="لوجو" fill className="object-cover" />
+                  <Image src="/brand-logo.jpg" alt="لوجو" fill className="object-cover" />
                 </div>
                 <span>{HeroMainArticle.category}</span>
               </div>
@@ -162,7 +162,7 @@ export default function Home() {
               <div className="flex items-center gap-3 text-xs text-slate-300 pt-2 font-bold flex-wrap">
                 <span className="flex items-center gap-1.5 bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-lg shadow-sm">
                   <div className="relative w-3.5 h-3.5 rounded-full overflow-hidden shrink-0">
-                    <Image src="/logo.jpg" alt="الصحفي" fill className="object-cover" />
+                    <Image src="/brand-logo.jpg" alt="الصحفي" fill className="object-cover" />
                   </div>
                   بقلم: {HeroMainArticle.author}
                 </span>
@@ -190,7 +190,7 @@ export default function Home() {
               أبرز متابعات اليوم
             </h3>
             <div className="relative w-5 h-5 rounded-full overflow-hidden border border-primary/20 shrink-0">
-              <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+              <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
             </div>
           </div>
 
@@ -233,7 +233,7 @@ export default function Home() {
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-foreground/10 pb-4">
           <div className="flex items-center gap-3">
             <div className="relative w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/30 shrink-0 shadow-sm">
-              <Image src="/logo.jpg" alt="لوجو يحدث الآن 24" fill className="object-cover" />
+              <Image src="/brand-logo.jpg" alt="لوجو يحدث الآن 24" fill className="object-cover" />
             </div>
             <div>
               <h2 className="text-xl md:text-2xl font-black text-foreground">آخر التغطيات والتقارير</h2>
@@ -282,7 +282,7 @@ export default function Home() {
 
                   <div className="flex items-center gap-1.5 text-[10px] text-slate-200 z-10 font-bold">
                     <div className="relative w-3.5 h-3.5 rounded-full overflow-hidden shrink-0 border border-white/40">
-                      <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+                      <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
                     </div>
                     <span>يحدث الآن 24</span>
                   </div>
@@ -322,7 +322,7 @@ export default function Home() {
             <div className="flex items-center justify-between border-b border-foreground/10 pb-3">
               <div className="flex items-center gap-2">
                 <div className="relative w-6 h-6 rounded-full overflow-hidden shrink-0 border border-urgent/40">
-                  <Image src="/logo.jpg" alt="Logo" fill className="object-cover" />
+                  <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
                 </div>
                 <h3 className="text-base font-black text-primary">
                   الأكثر قراءة الآن
@@ -354,7 +354,7 @@ export default function Home() {
             <div className="bg-primary text-white rounded-2xl p-4 space-y-3 shadow-md border border-white/10">
               <div className="flex items-center gap-3">
                 <div className="relative w-11 h-11 rounded-xl overflow-hidden shrink-0 border-2 border-amber-300 shadow">
-                  <Image src="/logo.jpg" alt="يحدث الآن 24" fill className="object-cover" />
+                  <Image src="/brand-logo.jpg" alt="يحدث الآن 24" fill className="object-cover" />
                 </div>
                 <div>
                   <h4 className="font-extrabold text-xs text-white">يحدث الآن 24</h4>
