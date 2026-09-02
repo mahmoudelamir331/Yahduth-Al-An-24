@@ -53,7 +53,7 @@ export function toPublicArticle(row: PublicArticleRow, index: number) {
 
 export async function loadPublicData() {
   if (!supabase) return null;
-  const [articlesResult, settingsResult] = await Promise.all([
+  const [articlesResult, settingsResult, categoriesResult] = await Promise.all([
     supabase
       .from("articles")
       .select("id,title,excerpt,content,cover_image_url,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
@@ -65,10 +65,12 @@ export async function loadPublicData() {
       .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams")
       .eq("id", true)
       .maybeSingle(),
+    supabase.from("categories").select("name,slug").eq("is_active", true).order("name", { ascending: true }),
   ]);
   if (articlesResult.error) throw articlesResult.error;
   return {
     articles: (articlesResult.data ?? []).map((row, index) => toPublicArticle(row as PublicArticleRow, index)),
     settings: settingsResult.data ?? null,
+    categories: (categoriesResult.data ?? []) as { name: string; slug: string }[],
   };
 }

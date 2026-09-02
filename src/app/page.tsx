@@ -20,6 +20,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState("الكل");
   const [news, setNews] = useState(ALL_NEWS);
   const [maintenance, setMaintenance] = useState<{ enabled: boolean; message: string; endsAt: string | null }>({ enabled: false, message: "", endsAt: null });
+  const [activeCategories, setActiveCategories] = useState<{ name: string; slug: string }[]>([]);
   const [maintenanceReady, setMaintenanceReady] = useState(false);
 
   useEffect(() => {
@@ -34,6 +35,7 @@ export default function Home() {
           endsAt: result.settings.maintenance_ends_at,
         });
       }
+      setActiveCategories(result.categories ?? []);
       setMaintenanceReady(true);
     }).catch(() => {
       if (!cancelled) setMaintenanceReady(true);
@@ -47,7 +49,7 @@ export default function Home() {
   const HeroSubArticles = news.slice(1, 4);
   const AllNewsList = news.slice(4);
 
-  const categories = ["الكل", "أخبار أسوان", "سياسة", "اقتصاد", "رياضة", "تكنولوجيا", "تحقيقات"];
+  const categories = ["الكل", ...activeCategories.map((category) => category.name)];
 
   const filteredNews = activeTab === "الكل" 
     ? AllNewsList 
