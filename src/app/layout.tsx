@@ -6,6 +6,7 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { LiveBroadcastBanner } from "@/components/LiveBroadcastBanner";
 import { SiteProtection } from "@/components/SiteProtection";
+import { AdSlot } from "@/components/AdSlot";
 import { getActiveCategories, getSiteSettings, isMaintenanceActive } from "@/lib/siteSettings";
 
 const cairo = Cairo({
@@ -50,6 +51,7 @@ export default async function RootLayout({
           ) : (
             <>
               <SiteProtection enabled={siteSettings?.content_protection_enabled ?? false} antiAdblockEnabled={siteSettings?.anti_adblock_enabled ?? false}>
+                <AdSlot slot="header" data={siteSettings?.ads.header} />
                 <Header categories={categories} />
                 <LiveBroadcastBanner enabled={siteSettings?.live_enabled ?? false} url={siteSettings?.live_url ?? null} platform={siteSettings?.live_platform ?? null} />
                 <main className="flex-1">{children}</main>

@@ -10,15 +10,18 @@ export function SiteProtection({ enabled, antiAdblockEnabled, children }: Props)
   useEffect(() => {
     if (enabled) {
       const preventCopy = (event: ClipboardEvent) => event.preventDefault();
-      const preventContextMenu = (event: MouseEvent) => {
-        if ((event.target as HTMLElement).closest("img")) event.preventDefault();
+      const preventContextMenu = (event: MouseEvent) => event.preventDefault();
+      const preventShortcut = (event: KeyboardEvent) => {
+        if ((event.ctrlKey || event.metaKey) && ["c", "x", "u", "s", "a"].includes(event.key.toLowerCase())) event.preventDefault();
       };
       document.addEventListener("copy", preventCopy);
       document.addEventListener("contextmenu", preventContextMenu);
+      document.addEventListener("keydown", preventShortcut);
       document.documentElement.classList.add("content-protected");
       return () => {
         document.removeEventListener("copy", preventCopy);
         document.removeEventListener("contextmenu", preventContextMenu);
+        document.removeEventListener("keydown", preventShortcut);
         document.documentElement.classList.remove("content-protected");
       };
     }
