@@ -18,7 +18,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
 
   try {
     const response = await fetch(
-      `${url}/rest/v1/site_settings?select=maintenance_enabled,maintenance_message,maintenance_ends_at,live_enabled,live_url,live_platform,content_protection_enabled,anti_adblock_enabled&id=eq.true`,
+      `${url}/rest/v1/site_settings?select=maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams&id=eq.true`,
       {
         cache: "no-store",
         signal: AbortSignal.timeout(5000),
@@ -29,8 +29,25 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       },
     );
     if (!response.ok) return null;
-    const settings = (await response.json()) as SiteSettings[];
-    return settings[0] ?? null;
+    const settings = (await response.json()) as Array<{
+      maintenance_enabled: boolean;
+      maintenance_message: string;
+      maintenance_ends_at: string | null;
+      live_streams: { enabled?: boolean; url?: string | null; platform?: string | null } | null;
+    }>;
+    const row = settings[0];
+    if (!row) return null;
+    return {
+      maintenance_enabled: row.maintenance_enabled,
+      maintenance_message: row.maintenance_message,
+      maintenance_ends_at: row.maintenance_ends_at,
+      live_enabled: row.live_streams?.enabled ?? false,
+      live_url: row.live_streams?.url ?? null,
+      live_platform: row.live_streams?.platform ?? null,
+      // These columns are not present in the current production schema.
+      content_protection_enabled: false,
+      anti_adblock_enabled: false,
+    };
   } catch {
     return null;
   }
