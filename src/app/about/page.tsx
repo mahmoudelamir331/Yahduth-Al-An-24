@@ -27,7 +27,7 @@ export default function AboutPage() {
             <span>منصة صحفية مستقلة 24/7</span>
           </div>
           <h1 className="text-3xl md:text-5xl font-black tracking-tight leading-tight">
-            عن "يحدث الآن 24"
+            عن &quot;يحدث الآن 24&quot;
           </h1>
           <p className="text-sm md:text-base text-slate-200 font-bold leading-relaxed">
             بوابة إخبارية صحفية تغطي كافة الأحداث المحلية والميدانية في محافظة أسوان وصعيد مصر والعالم بكل دقة وحيادية.

@@ -223,7 +223,7 @@ export default function NewsDetailPage({ params }: PageProps) {
         <div className="bg-primary/5 border-r-4 border-primary p-4 md:p-6 rounded-2xl space-y-2 flex gap-3 items-start">
           <Quote className="w-8 h-8 text-primary shrink-0 opacity-40 mt-1" />
           <p className="text-sm md:text-base font-extrabold text-primary leading-relaxed">
-            "نحرص في بوابة يحدث الآن 24 على نقل الحقائق الميدانية أولاً بأول بشفافية وموضوعية تامة."
+            &quot;نحرص في بوابة يحدث الآن 24 على نقل الحقائق الميدانية أولاً بأول بشفافية وموضوعية تامة.&quot;
           </p>
         </div>
 

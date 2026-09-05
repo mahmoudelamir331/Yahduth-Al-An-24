@@ -151,7 +151,7 @@ function SearchResultsContent() {
           <Frown className="w-16 h-16 text-urgent mx-auto opacity-50" />
           <div className="space-y-1">
             <h3 className="text-lg font-black text-foreground">
-              عفواً، لا توجد نتائج مطابقة لـ "{query}"
+              عفواً، لا توجد نتائج مطابقة لـ &quot;{query}&quot;
             </h3>
             <p className="text-xs text-foreground/60 font-bold">
               تأكد من كتابة الكلمات بشكل صحيح أو حاول البحث عن كلمات أخرى مثل: (أسوان، استثمار، طاقة، رياضة).

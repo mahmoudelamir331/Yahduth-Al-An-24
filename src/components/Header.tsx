@@ -1,10 +1,10 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Search, Menu, X, Moon, Sun, Calendar, Radio } from "lucide-react";
+import { Search, Menu, X, Moon, Sun, Calendar } from "lucide-react";
 import { useTheme } from "next-themes";
 import type { PublicCategory } from "@/lib/siteSettings";
 
@@ -16,36 +16,18 @@ const TickerNews = [
   "بيان رسمي يشيد بتكاتف الجهود التنفيذية لمتابعة مشروعات صعيد مصر",
 ];
 
-const NavCategories = [
-  { name: "الرئيسية", href: "/" },
-  { name: "أخبار أسوان", href: "/category/aswan" },
-  { name: "عاجل", href: "/category/urgent" },
-  { name: "سياسة واقتصاد", href: "/category/politics" },
-  { name: "تحقيقات وحوارات", href: "/category/reports" },
-  { name: "رياضة وتكنولوجيا", href: "/category/sports" },
-  { name: "من نحن", href: "/about" },
-  { name: "اتصل بنا", href: "/contact" },
-];
-
 export function Header({ categories }: { categories: PublicCategory[] }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  );
   const router = useRouter();
-  const [todayDate, setTodayDate] = useState("");
-
-  useEffect(() => {
-    setMounted(true);
-    const dateOptions: Intl.DateTimeFormatOptions = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    setTodayDate(new Date().toLocaleDateString("ar-EG", dateOptions));
-  }, []);
+  const todayDate = "أسوان - مصر";
 
   return (
     <>
