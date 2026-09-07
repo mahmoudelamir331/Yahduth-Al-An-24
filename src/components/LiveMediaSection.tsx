@@ -10,49 +10,21 @@ interface VideoItem {
   youtubeId: string;
   title: string;
   channel: string;
+  enabled?: boolean;
   duration: string;
   date: string;
   views: string;
 }
 
-const REAL_NEWS_STREAMS: VideoItem[] = [
-  {
-    id: "1",
-    youtubeId: "https://www.youtube.com/watch?v=bNyUyrR0PHo", // Al Jazeera Live Stream
-    title: "بث مباشر: تغطية صحفية وإخبارية شاملة لكافة الأحداث والتقارير الميدانية 24/7",
-    channel: "الجزيرة الإخبارية مباشر",
-    duration: "مباشر 🔴",
-    date: "الآن",
-    views: "45.2k",
-  },
-  {
-    id: "2",
-    youtubeId: "https://www.youtube.com/watch?v=mX2_tA-vGMo", // Extra News Egypt Live Stream
-    title: "بث مباشر: إكسترا نيوز - متابعات ميدانية ونشرات أخبار مصر والصعيد على مدار الساعة",
-    channel: "إكسترا نيوز مصر",
-    duration: "مباشر 🔴",
-    date: "الآن",
-    views: "28.9k",
-  },
-  {
-    id: "3",
-    youtubeId: "https://www.youtube.com/watch?v=x9J2k0o0xGE", // Al Arabiya Live Stream
-    title: "بث مباشر: النشرات الإخبارية والتغطيات الاقتصادية والميدانية المباشرة",
-    channel: "العربية الحدث",
-    duration: "مباشر 🔴",
-    date: "الآن",
-    views: "34.1k",
-  },
-  {
-    id: "4",
-    youtubeId: "https://www.youtube.com/watch?v=2g811Eo7K8U", // Sky News Arabia Live Stream
-    title: "بث مباشر: سكاي نيوز عربية - تغطية شاملة للأخبار العاجلة والتحليلات الإخبارية",
-    channel: "سكاي نيوز عربية",
-    duration: "مباشر 🔴",
-    date: "الآن",
-    views: "21.7k",
-  },
-];
+const EMPTY_STREAM: VideoItem = {
+  id: "empty",
+  youtubeId: "",
+  title: "لا يوجد بث مباشر متاح حالياً",
+  channel: "",
+  duration: "غير متاح",
+  date: "",
+  views: "",
+};
 
 function getYoutubeEmbedUrl(value: string) {
   try {
@@ -69,19 +41,21 @@ function getYoutubeEmbedUrl(value: string) {
 }
 
 export function LiveMediaSection() {
-  const [isLive, setIsLive] = useState<boolean>(true);
-  const [streams, setStreams] = useState<VideoItem[]>(REAL_NEWS_STREAMS);
-  const [activeVideo, setActiveVideo] = useState<VideoItem>(REAL_NEWS_STREAMS[0]);
+  const [streams, setStreams] = useState<VideoItem[]>([]);
+  const isLive = streams.length > 0;
+  const [activeVideo, setActiveVideo] = useState<VideoItem>(EMPTY_STREAM);
 
   useEffect(() => {
     let cancelled = false;
     loadPublicData().then((result) => {
       const data = result?.settings;
-      if (cancelled || !Array.isArray(data?.live_streams)) return;
-      const next = (data.live_streams as Array<{ id: string; youtubeId: string; title: string; channel: string; enabled: boolean }>)
+      if (cancelled) return;
+      const rawStreams = Array.isArray(data?.live_streams) ? data.live_streams : [];
+      const next = (rawStreams as Array<{ id: string; youtubeId: string; title: string; channel: string; enabled?: boolean }>)
         .filter((item) => item.enabled !== false && item.youtubeId && item.title && item.channel)
         .map((item) => ({ ...item, duration: "مباشر 🔴", date: "الآن", views: "متابعة مباشرة" }));
-      if (next.length) { setStreams(next); setActiveVideo(next[0]); }
+      setStreams(next);
+      setActiveVideo(next[0] ?? EMPTY_STREAM);
     }).catch(() => undefined);
     return () => { cancelled = true; };
   }, []);
@@ -111,10 +85,10 @@ export function LiveMediaSection() {
 
       {/* Main Video Section Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         {/* Video Player Box */}
         <div className="lg:col-span-8 bg-black rounded-3xl overflow-hidden shadow-2xl relative border-2 border-urgent ring-4 ring-urgent/20 transition-all duration-500">
-          
+
           {/* Top Info Overlay */}
           <div className="absolute top-0 inset-x-0 bg-gradient-to-b from-black/80 via-black/40 to-transparent p-4 z-20 flex items-center justify-between pointer-events-none">
             <div className="flex items-center gap-2">
@@ -122,12 +96,12 @@ export function LiveMediaSection() {
                 <span className="w-2 h-2 rounded-full bg-white"></span>
                 بث إخباري مباشر 🔴
               </span>
-              
+
               <span className="bg-black/60 backdrop-blur-md text-amber-300 text-xs font-bold px-3 py-1 rounded-full border border-white/10">
                 {activeVideo.channel}
               </span>
             </div>
-            
+
             <div className="flex items-center gap-2 text-white text-xs font-bold bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full">
               <Eye className="w-3.5 h-3.5 text-amber-300" />
               <span>{activeVideo.views} قراءة ومتابعة</span>

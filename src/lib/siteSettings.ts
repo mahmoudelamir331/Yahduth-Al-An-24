@@ -30,7 +30,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       maintenance_enabled: boolean;
       maintenance_message: string;
       maintenance_ends_at: string | null;
-      live_streams: { enabled?: boolean; url?: string | null; platform?: string | null } | null;
+      live_streams: Array<{ id: string; youtubeId: string; title: string; channel: string; enabled?: boolean }> | null;
       content_protection_enabled?: boolean;
       anti_adblock_enabled?: boolean;
       ads?: SiteSettings["ads"] | null;
@@ -40,9 +40,9 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       maintenance_enabled: row.maintenance_enabled,
       maintenance_message: row.maintenance_message,
       maintenance_ends_at: row.maintenance_ends_at,
-      live_enabled: row.live_streams?.enabled ?? false,
-      live_url: row.live_streams?.url ?? null,
-      live_platform: row.live_streams?.platform ?? null,
+      live_enabled: Array.isArray(row.live_streams) && row.live_streams.some((stream) => stream.enabled !== false),
+      live_url: Array.isArray(row.live_streams) ? row.live_streams.find((stream) => stream.enabled !== false)?.youtubeId ?? null : null,
+      live_platform: Array.isArray(row.live_streams) && row.live_streams.some((stream) => stream.enabled !== false) ? "youtube" : null,
       content_protection_enabled: row.content_protection_enabled ?? false,
       anti_adblock_enabled: row.anti_adblock_enabled ?? false,
       ads: row.ads ?? {},
