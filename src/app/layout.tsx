@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { LiveBroadcastBanner } from "@/components/LiveBroadcastBanner";
 import { SiteProtection } from "@/components/SiteProtection";
 import { AdSlot } from "@/components/AdSlot";
+import { MaintenancePage } from "@/components/MaintenancePage";
 import { getActiveCategories, getSiteSettings, isMaintenanceActive } from "@/lib/siteSettings";
 
 const cairo = Cairo({
@@ -40,19 +41,12 @@ export default async function RootLayout({
       <body className={`${cairo.variable} font-sans antialiased min-h-screen flex flex-col`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {maintenanceActive ? (
-            <main className="flex-1 min-h-screen grid place-items-center px-6 py-16 text-center">
-              <section className="max-w-xl space-y-4">
-                <h1 className="text-3xl font-black">الموقع تحت الصيانة</h1>
-                <p className="text-lg opacity-75">
-                  {siteSettings?.maintenance_message || "سنعود إليكم قريبًا."}
-                </p>
-              </section>
-            </main>
+            <MaintenancePage message={siteSettings?.maintenance_message || ""} endsAt={siteSettings?.maintenance_ends_at ?? null} />
           ) : (
             <>
               <SiteProtection enabled={siteSettings?.content_protection_enabled ?? false} antiAdblockEnabled={siteSettings?.anti_adblock_enabled ?? false}>
                 <AdSlot slot="header" data={siteSettings?.ads.header} />
-                <Header categories={categories} />
+                <Header categories={categories} logoUrl={siteSettings?.logo_url ?? null} />
                 <LiveBroadcastBanner enabled={siteSettings?.live_enabled ?? false} url={siteSettings?.live_url ?? null} platform={siteSettings?.live_platform ?? null} />
                 <main className="flex-1">{children}</main>
                 <Footer />

@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /yahduth-news
+/yahduth-admin
 /.pnp
 .pnp.*
 .yarn/*
@@ -30,6 +31,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+
+# tunnel / local server logs
+/ngrok-*.log
+/localtunnel*.log
+/serveo*.log
+/pinggy*.log
+/next-dev.log
 
 # env files (can opt-in for committing if needed)
 .env*

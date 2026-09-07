@@ -16,7 +16,7 @@ const TickerNews = [
   "بيان رسمي يشيد بتكاتف الجهود التنفيذية لمتابعة مشروعات صعيد مصر",
 ];
 
-export function Header({ categories }: { categories: PublicCategory[] }) {
+export function Header({ categories, logoUrl }: { categories: PublicCategory[]; logoUrl?: string | null }) {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,6 +27,7 @@ export function Header({ categories }: { categories: PublicCategory[] }) {
     () => false,
   );
   const router = useRouter();
+  const brandLogo = logoUrl || "/brand-logo.jpg";
   const todayDate = "أسوان - مصر";
 
   return (
@@ -60,11 +61,12 @@ export function Header({ categories }: { categories: PublicCategory[] }) {
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="relative w-11 h-10 sm:w-14 sm:h-12 rounded-2xl overflow-hidden border-2 border-primary shadow-sm bg-primary/10 group-hover:scale-105 transition-transform duration-200">
               <Image
-                src="/brand-logo.jpg"
+                src={brandLogo}
                 alt="شعار يحدث الآن 24"
                 fill
                 className="object-cover"
                 priority
+                unoptimized={Boolean(logoUrl)}
               />
             </div>
 
@@ -151,7 +153,7 @@ export function Header({ categories }: { categories: PublicCategory[] }) {
             <div className="container mx-auto px-4 py-4 space-y-2 max-w-full">
               <div className="flex items-center gap-3 p-3 bg-primary/10 rounded-2xl mb-3 border border-primary/20">
                 <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0">
-                  <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
+                  <Image src={brandLogo} alt="Logo" fill className="object-cover" unoptimized={Boolean(logoUrl)} />
                 </div>
                 <div className="text-xs">
                   <strong className="text-primary block font-black text-sm">يحدث الآن 24</strong>
@@ -179,7 +181,7 @@ export function Header({ categories }: { categories: PublicCategory[] }) {
         <div className="bg-urgent/10 border-t border-foreground/10 text-foreground overflow-hidden flex items-center h-9 text-xs w-full max-w-full">
           <div className="bg-urgent text-white font-black px-3.5 h-full flex items-center gap-1.5 shrink-0 z-10 shadow-md">
             <div className="relative w-4 h-4 rounded-full overflow-hidden border border-white/40 shrink-0">
-              <Image src="/brand-logo.jpg" alt="عاجل" fill className="object-cover" />
+              <Image src={brandLogo} alt="عاجل" fill className="object-cover" unoptimized={Boolean(logoUrl)} />
             </div>
             <span className="text-[11px]">عاجل</span>
           </div>
@@ -211,7 +213,7 @@ export function Header({ categories }: { categories: PublicCategory[] }) {
 
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-primary/20 shrink-0">
-                <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
+                <Image src={brandLogo} alt="Logo" fill className="object-cover" unoptimized={Boolean(logoUrl)} />
               </div>
               <h3 className="text-base font-black text-primary">
                 البحث في يحدث الآن 24

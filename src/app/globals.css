@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+.maintenance-page { min-height: 100vh; display: grid; place-items: center; align-content: center; gap: 1rem; padding: 3rem 1.5rem; text-align: center; background: radial-gradient(circle at top, #e8f7f5, var(--background)); color: var(--foreground); }
+.maintenance-page h1 { font-size: clamp(1.75rem, 5vw, 3rem); font-weight: 900; }
+.maintenance-page p { max-width: 34rem; opacity: .75; }
+.maintenance-logo { display: grid; width: 5rem; height: 5rem; place-items: center; border-radius: 1.5rem; background: var(--primary); color: var(--primary-foreground); font-size: 2.5rem; font-weight: 900; animation: maintenance-pulse 2.2s ease-in-out infinite; }
+.maintenance-countdown { display: flex; gap: .75rem; direction: rtl; }
+.maintenance-countdown b { min-width: 4.5rem; border: 1px solid var(--border); border-radius: .75rem; padding: .75rem .5rem; background: var(--card); font-size: 1.25rem; }
+.maintenance-countdown small { display: block; margin-top: .25rem; font-size: .65rem; font-weight: 400; opacity: .65; }
+.maintenance-form { display: flex; width: min(100%, 28rem); gap: .5rem; }
+.maintenance-form input { min-width: 0; flex: 1; border: 1px solid var(--border); border-radius: .5rem; padding: .7rem .8rem; background: var(--card); }
+.maintenance-form button { border: 0; border-radius: .5rem; padding: .7rem 1rem; background: var(--primary); color: var(--primary-foreground); font-weight: 700; }
+.maintenance-social { display: flex; gap: 1rem; font-size: .8rem; color: var(--primary); }
+@keyframes maintenance-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--primary) 30%, transparent); transform: scale(1); } 50% { box-shadow: 0 0 0 1rem transparent; transform: scale(1.04); } }
+
 :root {
   --background: #f8fafc;
   --foreground: #0f172a;
