@@ -1,5 +1,10 @@
 import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 
+// ============================================================
+// عميل المتصفح (Browser) الموحّد — يستخدم anon key فقط.
+// كل القيم العامة والأنواع والمُساعدين هنا تُصدَّر لبقية المشروع
+// (لا توجد نسخ مكررة من الأنواع في ملفات أخرى).
+// ============================================================
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
@@ -74,3 +79,26 @@ export async function loadPublicData() {
     categories: (categoriesResult.data ?? []) as { name: string; slug: string }[],
   };
 }
+// ============================================================
+// نوع بيانات المستخدم يُعرَّف هنا في المتصفح بدون أي إيميلات
+// (لا تُكشف الإيميلات الإدارية أبداً) — كافٍ للتحقق من تسجيل الدخول.
+// الإيميلات الإدارية تُقرأ فقط في supabase-server.ts (الخادم).
+// ============================================================
+export type AdminUser = { id?: string | null; email?: string | null } | null | undefined;
+
+export type Permissions = { isAdmin: boolean; isEditor?: boolean; uid: string | null };
+
+// فحص الصلاحيات الفعلي في supabase-server.ts — يستورد الدوال (وليس
+// المتغيرات) من هناك. لا تُضف ADMIN_EMAILS هنا: هذا الملف يُحمّل في
+// المتصفح، والإيميلات الإدارية تُقرأ فقط داخل الخادم.
+import { checkPermissions, canManageArticles } from "./supabase-server";
+
+// إعادة تصدير للتوافق: sum يونيك checkPermissions و canManageArticles
+// من supabase-server دون تعريفها هنا في المتصفح.
+export { checkPermissions, canManageArticles };
+// ============================================================
+// التوحيد: عميل الخادم (Service Role) موجود في
+//   src/lib/supabase-server.ts  ←  لا يُستورد من المتصفح أبداً.
+// استخدمه فقط داخل ملفات Server (API routes / middleware).
+// لا تستدخل Service Role في ملفات Browser حتى لا تُكشف.
+// ============================================================
