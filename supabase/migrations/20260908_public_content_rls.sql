@@ -11,6 +11,7 @@ alter table if exists public.site_settings enable row level security;
 -- Re-running this migration should replace only these policies.
 drop policy if exists "Public can read published articles" on public.articles;
 drop policy if exists "Public can read active categories" on public.categories;
+drop policy if exists "Public can read site settings" on public.site_settings;
 
 -- Public visitors may read published news only.
 create policy "Public can read published articles"
@@ -28,6 +29,13 @@ create policy "Public can read active categories"
   for select
   to anon, authenticated
   using (is_active = true);
+
+-- The public site needs these settings for maintenance mode and protection.
+create policy "Public can read site settings"
+  on public.site_settings
+  for select
+  to anon, authenticated
+  using (true);
 
 -- No INSERT, UPDATE, or DELETE policies are intentionally defined for
 -- articles, categories, or site_settings. With RLS enabled, those writes
