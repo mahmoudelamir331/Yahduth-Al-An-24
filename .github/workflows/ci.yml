@@ -1,0 +1,35 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    name: Lint and build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Install main site dependencies
+        run: npm ci
+      - name: Lint main site
+        run: npm run lint
+      - name: Build main site
+        run: npm run build
+      - name: Install admin dependencies
+        working-directory: yahduth-admin
+        run: npm install
+      - name: Lint admin panel
+        working-directory: yahduth-admin
+        run: npm run lint
+      - name: Build admin panel
+        working-directory: yahduth-admin
+        run: npm run build
