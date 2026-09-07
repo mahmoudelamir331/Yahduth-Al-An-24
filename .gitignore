@@ -38,6 +38,15 @@ yarn-error.log*
 /serveo*.log
 /pinggy*.log
 /next-dev.log
+/ngrok.log
+/next-dev-error.log
+/lint-output.txt
+
+# supabase local
+/supabase/.temp/
+/supabase/.branches/
+/supabase/.status
+/supabase/.log/
 
 # env files (can opt-in for committing if needed)
 .env*
