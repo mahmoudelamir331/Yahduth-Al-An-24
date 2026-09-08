@@ -1,5 +1,5 @@
 export interface Article {
-  id: number;
+  id: number | string;
   slug: string;
   category: string;
   categorySlug: string;
@@ -221,8 +221,8 @@ export const ALL_NEWS: Article[] = [
 ];
 
 export function getArticleById(id: number | string): Article | undefined {
-  const numId = typeof id === "string" ? parseInt(id, 10) : id;
-  return ALL_NEWS.find((art) => art.id === numId);
+  const value = String(id);
+  return ALL_NEWS.find((art) => String(art.id) === value || art.slug === value);
 }
 
 export function getArticlesByCategory(categorySlug: string): Article[] {

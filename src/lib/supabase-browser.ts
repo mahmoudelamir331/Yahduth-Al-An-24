@@ -36,9 +36,8 @@ export function toPublicArticle(row: PublicArticleRow, index: number) {
   const content = Array.isArray(row.content)
     ? row.content.map(String)
     : [String(row.content ?? "")];
-  const numericId = Number.parseInt(row.id.replace(/[^0-9]/g, "").slice(-8), 10) || index + 1000;
   return {
-    id: numericId,
+    id: row.id,
     slug: row.id,
     category: category?.name ?? "أخبار أسوان",
     categorySlug: category?.slug ?? "aswan-news",
@@ -102,3 +101,7 @@ export { checkPermissions, canManageArticles };
 // استخدمه فقط داخل ملفات Server (API routes / middleware).
 // لا تستدخل Service Role في ملفات Browser حتى لا تُكشف.
 // ============================================================
+export async function incrementArticleViews(articleId: string) {
+  if (!supabase || !articleId.trim()) return;
+  await supabase.rpc("increment_article_views", { article_id: articleId.trim() });
+}

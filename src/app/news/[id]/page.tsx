@@ -1,24 +1,23 @@
 "use client";
 
-import React, { useState, use } from "react";
+import React, { useEffect, useState, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { notFound } from "next/navigation";
-import { 
-  Clock, 
-  Eye, 
-  Share2, 
-  ArrowRight, 
-  Bookmark, 
-  ChevronLeft, 
-  Check, 
-  Copy, 
-  MessageCircle, 
+import {
+  Clock,
+  Eye,
+  Share2,
+  ArrowRight,
+  ChevronLeft,
+  Check,
+  Copy,
+  MessageCircle,
   Send,
   UserCheck,
   Quote
 } from "lucide-react";
-import { getArticleById, ALL_NEWS, Article } from "@/data/newsData";
+import { getArticleById, ALL_NEWS, type Article } from "@/data/newsData";
+import { incrementArticleViews, loadPublicData } from "@/lib/supabase-browser";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -26,11 +25,24 @@ interface PageProps {
 
 export default function NewsDetailPage({ params }: PageProps) {
   const resolvedParams = use(params);
-  const article = getArticleById(resolvedParams.id);
+  const [article, setArticle] = useState<Article | undefined>(() => getArticleById(resolvedParams.id));
   const [copied, setCopied] = useState(false);
 
+  useEffect(() => {
+    let cancelled = false;
+    loadPublicData().then((result) => {
+      if (cancelled || !result) return;
+      const found = result.articles.find((item) => String(item.id) === resolvedParams.id || item.slug === resolvedParams.id);
+      if (found) {
+        setArticle(found);
+        void incrementArticleViews(String(found.slug));
+      }
+    }).catch(() => undefined);
+    return () => { cancelled = true; };
+  }, [resolvedParams.id]);
+
   if (!article) {
-    notFound();
+    return <div className="container mx-auto px-4 py-20 text-center font-bold text-foreground">جاري تحميل الخبر أو الخبر غير متاح حالياً.</div>;
   }
 
   const relatedArticles = ALL_NEWS.filter((item) => item.id !== article.id).slice(0, 4);
@@ -48,7 +60,7 @@ export default function NewsDetailPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl space-y-10">
-      
+
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs font-bold text-foreground/60 bg-foreground/5 px-4 py-2.5 rounded-2xl border border-foreground/10 flex-wrap">
         <Link href="/" className="hover:text-primary transition-colors">الرئيسية</Link>
@@ -62,7 +74,7 @@ export default function NewsDetailPage({ params }: PageProps) {
 
       {/* Article Header & Title */}
       <header className="space-y-5">
-        
+
         {/* Category & Urgent Badges */}
         <div className="flex items-center gap-3 flex-wrap">
           {article.isUrgent && (
@@ -88,7 +100,7 @@ export default function NewsDetailPage({ params }: PageProps) {
 
         {/* Publisher Info & Time Metadata */}
         <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-b border-foreground/10 py-4 text-xs font-bold text-foreground/75">
-          
+
           <div className="flex items-center gap-3">
             <div className="relative w-12 h-12 rounded-2xl overflow-hidden border-2 border-primary/30 shrink-0 shadow-md">
               <Image src="/brand-logo.jpg" alt="محمد الأمين" fill className="object-cover" />
@@ -218,7 +230,7 @@ export default function NewsDetailPage({ params }: PageProps) {
 
       {/* Article Content Body (Mobile-Optimized Typography) */}
       <article className="bg-background border border-foreground/10 rounded-3xl p-6 md:p-10 shadow-sm space-y-6 text-foreground">
-        
+
         {/* Quote Highlight Box */}
         <div className="bg-primary/5 border-r-4 border-primary p-4 md:p-6 rounded-2xl space-y-2 flex gap-3 items-start">
           <Quote className="w-8 h-8 text-primary shrink-0 opacity-40 mt-1" />
