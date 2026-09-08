@@ -242,9 +242,9 @@ export default function NewsDetailPage({ params }: PageProps) {
         {/* Article Content Paragraphs */}
         <div className="space-y-6 text-base md:text-lg leading-loose md:leading-loose text-foreground/90 font-bold">
           {article.content.map((paragraph, index) => (
-            <p key={index} className="text-justify leading-relaxed">
-              {paragraph}
-            </p>
+            paragraph.trim().startsWith("<")
+              ? <div key={index} className="text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: paragraph }} />
+              : <p key={index} className="text-justify leading-relaxed">{paragraph}</p>
           ))}
         </div>
 

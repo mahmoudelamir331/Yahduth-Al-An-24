@@ -103,5 +103,5 @@ export { checkPermissions, canManageArticles };
 // ============================================================
 export async function incrementArticleViews(articleId: string) {
   if (!supabase || !articleId.trim()) return;
-  await supabase.rpc("increment_article_views", { article_id: articleId.trim() });
+  await supabase.rpc("increment_article_views", { target_article_id: articleId.trim() });
 }
