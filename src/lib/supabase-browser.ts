@@ -31,7 +31,7 @@ export type PublicArticleRow = {
   categories: { name: string; slug: string } | { name: string; slug: string }[] | null;
 };
 
-export function toPublicArticle(row: PublicArticleRow, index: number) {
+export function toPublicArticle(row: PublicArticleRow) {
   const category = Array.isArray(row.categories) ? row.categories[0] : row.categories;
   const content = Array.isArray(row.content)
     ? row.content.map(String)
@@ -73,7 +73,7 @@ export async function loadPublicData() {
   ]);
   if (articlesResult.error) throw articlesResult.error;
   return {
-    articles: (articlesResult.data ?? []).map((row, index) => toPublicArticle(row as PublicArticleRow, index)),
+    articles: (articlesResult.data ?? []).map((row, index) => toPublicArticle(row as PublicArticleRow)),
     settings: settingsResult.data ?? null,
     categories: (categoriesResult.data ?? []) as { name: string; slug: string }[],
   };
