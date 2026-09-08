@@ -62,8 +62,8 @@ export async function loadPublicData() {
       .from("articles")
       .select("id,title,excerpt,content,cover_image_url,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
       .eq("status", "published")
-      .lte("published_at", new Date().toISOString())
-      .order("published_at", { ascending: false }),
+      .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
+      .order("published_at", { ascending: false, nullsFirst: false }),
     supabase
       .from("site_settings")
       .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams")
