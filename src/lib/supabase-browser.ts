@@ -73,7 +73,7 @@ export async function loadPublicData() {
   ]);
   if (articlesResult.error) throw articlesResult.error;
   return {
-    articles: (articlesResult.data ?? []).map((row, index) => toPublicArticle(row as PublicArticleRow)),
+    articles: (articlesResult.data ?? []).map((row) => toPublicArticle(row as PublicArticleRow)),
     settings: settingsResult.data ?? null,
     categories: (categoriesResult.data ?? []) as { name: string; slug: string }[],
   };
