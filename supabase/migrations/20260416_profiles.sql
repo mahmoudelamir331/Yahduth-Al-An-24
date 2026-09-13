@@ -13,6 +13,10 @@ create table if not exists public.profiles (
 );
 
 alter table public.profiles enable row level security;
+drop policy if exists "Users read own profile" on public.profiles;
+drop policy if exists "Users update own profile" on public.profiles;
+drop policy if exists "Users insert own profile" on public.profiles;
+drop policy if exists "Super admins read all profiles" on public.profiles;
 
 -- كل موظف يقرأ ويعدل بروفايله بنفسه.
 create policy "Users read own profile" on public.profiles for select to authenticated using (auth.uid() = user_id);

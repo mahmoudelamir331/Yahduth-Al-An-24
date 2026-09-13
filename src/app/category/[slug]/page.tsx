@@ -3,8 +3,8 @@
 import React, { useState, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Eye, ArrowRight, Filter, ChevronLeft, Loader2, Pin } from "lucide-react";
-import { getArticlesByCategory, ALL_NEWS, Article } from "@/data/newsData";
+import { Eye, ArrowRight, ChevronLeft, Loader2, Pin } from "lucide-react";
+import { getArticlesByCategory } from "@/data/newsData";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -23,7 +23,7 @@ const CategoryTitles: Record<string, string> = {
 export default function CategoryPage({ params }: PageProps) {
   const resolvedParams = use(params);
   const slug = resolvedParams.slug;
-  
+
   const categoryTitle = CategoryTitles[slug] || "قسم الأخبار";
   const allCategoryArticles = getArticlesByCategory(slug);
 
@@ -44,7 +44,7 @@ export default function CategoryPage({ params }: PageProps) {
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-8 max-w-6xl">
-      
+
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs font-bold text-foreground/60 bg-foreground/5 px-4 py-2.5 rounded-2xl border border-foreground/10 flex-wrap">
         <Link href="/" className="hover:text-primary transition-colors">الرئيسية</Link>
@@ -79,18 +79,18 @@ export default function CategoryPage({ params }: PageProps) {
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayedArticles.map((item) => (
-              <Link 
-                key={item.id} 
-                href={`/news/${item.id}`} 
+              <Link
+                key={item.id}
+                href={`/news/${item.id}`}
                 className="group bg-background border border-foreground/10 rounded-3xl overflow-hidden hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col block"
               >
-                
+
                 {/* Image / Gradient Cover */}
                 <div className={`relative h-48 w-full bg-gradient-to-br ${item.gradient} p-4 flex flex-col justify-between text-white overflow-hidden`}>
                   <div className="absolute left-[-10px] top-[-10px] w-28 h-28 opacity-15 pointer-events-none">
                     <Image src="/brand-logo.jpg" alt="Logo" fill className="object-contain" />
                   </div>
-                  
+
                   <div className="flex items-center justify-between z-10">
                     <span className="bg-white/20 text-white text-[11px] font-black px-3 py-1 rounded-xl border border-white/20">
                       {item.category}

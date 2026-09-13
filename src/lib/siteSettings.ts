@@ -21,7 +21,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   if (!supabase) return null;
   try {
     const { data, error } = await supabase
-      .from("site_settings")
+      .from("public_site_settings")
       .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams,content_protection_enabled,anti_adblock_enabled,ads,logo_url")
       .eq("id", true)
       .single();

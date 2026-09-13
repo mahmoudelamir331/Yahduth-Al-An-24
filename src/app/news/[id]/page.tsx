@@ -18,6 +18,7 @@ import {
 } from "lucide-react";
 import { getArticleById, ALL_NEWS, type Article } from "@/data/newsData";
 import { incrementArticleViews, loadPublicData } from "@/lib/supabase-browser";
+import { sanitizeRichHtml } from "@/lib/sanitize-html";
 
 interface PageProps {
   params: Promise<{ id: string }>;
@@ -243,7 +244,7 @@ export default function NewsDetailPage({ params }: PageProps) {
         <div className="space-y-6 text-base md:text-lg leading-loose md:leading-loose text-foreground/90 font-bold">
           {article.content.map((paragraph, index) => (
             paragraph.trim().startsWith("<")
-              ? <div key={index} className="text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: paragraph }} />
+              ? <div key={index} className="text-justify leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeRichHtml(paragraph) }} />
               : <p key={index} className="text-justify leading-relaxed">{paragraph}</p>
           ))}
         </div>

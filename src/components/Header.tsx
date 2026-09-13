@@ -66,7 +66,6 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
                 fill
                 className="object-cover"
                 priority
-                unoptimized={Boolean(logoUrl)}
               />
             </div>
 
@@ -153,7 +152,7 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
             <div className="container mx-auto px-4 py-4 space-y-2 max-w-full">
               <div className="flex items-center gap-3 p-3 bg-primary/10 rounded-2xl mb-3 border border-primary/20">
                 <div className="relative w-10 h-10 rounded-xl overflow-hidden shrink-0">
-                  <Image src={brandLogo} alt="Logo" fill className="object-cover" unoptimized={Boolean(logoUrl)} />
+                  <Image src={brandLogo} alt="Logo" fill className="object-cover" />
                 </div>
                 <div className="text-xs">
                   <strong className="text-primary block font-black text-sm">يحدث الآن 24</strong>
@@ -181,7 +180,7 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
         <div className="bg-urgent/10 border-t border-foreground/10 text-foreground overflow-hidden flex items-center h-9 text-xs w-full max-w-full">
           <div className="bg-urgent text-white font-black px-3.5 h-full flex items-center gap-1.5 shrink-0 z-10 shadow-md">
             <div className="relative w-4 h-4 rounded-full overflow-hidden border border-white/40 shrink-0">
-              <Image src={brandLogo} alt="عاجل" fill className="object-cover" unoptimized={Boolean(logoUrl)} />
+              <Image src={brandLogo} alt="عاجل" fill className="object-cover" />
             </div>
             <span className="text-[11px]">عاجل</span>
           </div>
@@ -213,7 +212,7 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
 
             <div className="flex items-center gap-3 mb-4">
               <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-primary/20 shrink-0">
-                <Image src={brandLogo} alt="Logo" fill className="object-cover" unoptimized={Boolean(logoUrl)} />
+                <Image src={brandLogo} alt="Logo" fill className="object-cover" />
               </div>
               <h3 className="text-base font-black text-primary">
                 البحث في يحدث الآن 24

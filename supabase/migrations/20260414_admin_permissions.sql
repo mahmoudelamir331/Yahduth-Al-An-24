@@ -8,5 +8,7 @@ create table if not exists public.user_permissions (
 );
 
 alter table public.user_permissions enable row level security;
+drop policy if exists "Users can read their own permissions" on public.user_permissions;
+drop policy if exists "Super admins manage permissions" on public.user_permissions;
 create policy "Users can read their own permissions" on public.user_permissions for select to authenticated using (auth.uid() = user_id);
 create policy "Super admins manage permissions" on public.user_permissions for all to authenticated using (exists (select 1 from public.user_permissions me where me.user_id = auth.uid() and me.role = 'super_admin')) with check (exists (select 1 from public.user_permissions me where me.user_id = auth.uid() and me.role = 'super_admin'));

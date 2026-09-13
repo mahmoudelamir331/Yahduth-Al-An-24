@@ -10,6 +10,9 @@ create table if not exists public.password_reset_requests (
 );
 
 alter table public.password_reset_requests enable row level security;
+drop policy if exists "Anyone can submit a reset request" on public.password_reset_requests;
+drop policy if exists "Anyone can check their request status" on public.password_reset_requests;
+drop policy if exists "Super admins manage reset requests" on public.password_reset_requests;
 
 -- الموظف (أي زائر) يقدر يقدم طلب جديد أو يقرأ حالة طلبه بالبريد.
 create policy "Anyone can submit a reset request" on public.password_reset_requests for insert to anon, authenticated with check (true);

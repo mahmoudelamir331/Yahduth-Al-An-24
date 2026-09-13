@@ -18,6 +18,7 @@ export const supabase = hasSupabaseConfig
 
 export type PublicArticleRow = {
   id: string;
+  slug?: string | null;
   title: string;
   excerpt: string;
   content: unknown;
@@ -38,7 +39,7 @@ export function toPublicArticle(row: PublicArticleRow) {
     : [String(row.content ?? "")];
   return {
     id: row.id,
-    slug: row.id,
+    slug: row.slug ?? row.id,
     category: category?.name ?? "أخبار أسوان",
     categorySlug: category?.slug ?? "aswan-news",
     isUrgent: row.is_urgent,
@@ -60,12 +61,12 @@ export async function loadPublicData() {
   const [articlesResult, settingsResult, categoriesResult] = await Promise.all([
     supabase
       .from("articles")
-      .select("id,title,excerpt,content,cover_image_url,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
+      .select("id,slug,title,excerpt,content,cover_image_url,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
       .eq("status", "published")
       .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .order("published_at", { ascending: false, nullsFirst: false }),
     supabase
-      .from("site_settings")
+      .from("public_site_settings")
       .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams")
       .eq("id", true)
       .maybeSingle(),
@@ -90,11 +91,9 @@ export type Permissions = { isAdmin: boolean; isEditor?: boolean; uid: string | 
 // فحص الصلاحيات الفعلي في supabase-server.ts — يستورد الدوال (وليس
 // المتغيرات) من هناك. لا تُضف ADMIN_EMAILS هنا: هذا الملف يُحمّل في
 // المتصفح، والإيميلات الإدارية تُقرأ فقط داخل الخادم.
-import { checkPermissions, canManageArticles } from "./supabase-server";
 
 // إعادة تصدير للتوافق: sum يونيك checkPermissions و canManageArticles
 // من supabase-server دون تعريفها هنا في المتصفح.
-export { checkPermissions, canManageArticles };
 // ============================================================
 // التوحيد: عميل الخادم (Service Role) موجود في
 //   src/lib/supabase-server.ts  ←  لا يُستورد من المتصفح أبداً.
@@ -102,6 +101,6 @@ export { checkPermissions, canManageArticles };
 // لا تستدخل Service Role في ملفات Browser حتى لا تُكشف.
 // ============================================================
 export async function incrementArticleViews(articleId: string) {
-  if (!supabase || !articleId.trim()) return;
-  await supabase.rpc("increment_article_views", { target_article_id: articleId.trim() });
+  if (!articleId.trim()) return;
+  await fetch(`/api/articles/${encodeURIComponent(articleId.trim())}/view`, { method: "POST", credentials: "same-origin" });
 }

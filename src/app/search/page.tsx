@@ -4,8 +4,8 @@ import React, { useState, Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams, useRouter } from "next/navigation";
-import { Search, Eye, ArrowRight, ChevronLeft, Frown, Sparkles } from "lucide-react";
-import { ALL_NEWS, Article } from "@/data/newsData";
+import { Search, Eye, ChevronLeft, Frown, Sparkles } from "lucide-react";
+import { ALL_NEWS } from "@/data/newsData";
 
 function SearchResultsContent() {
   const searchParams = useSearchParams();
@@ -35,7 +35,7 @@ function SearchResultsContent() {
 
   return (
     <div className="container mx-auto px-4 py-8 space-y-8 max-w-6xl">
-      
+
       {/* Breadcrumb Navigation */}
       <nav className="flex items-center gap-2 text-xs font-bold text-foreground/60 bg-foreground/5 px-4 py-2.5 rounded-2xl border border-foreground/10 flex-wrap">
         <Link href="/" className="hover:text-primary transition-colors">الرئيسية</Link>
@@ -45,7 +45,7 @@ function SearchResultsContent() {
 
       {/* Header Banner & Refine Search Bar */}
       <div className="bg-gradient-to-r from-primary via-primary/95 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl space-y-6 border border-white/10">
-        
+
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="space-y-1">
             <div className="inline-flex items-center gap-2 bg-amber-400/20 text-amber-300 border border-amber-400/30 px-3 py-1 rounded-full text-xs font-black">
@@ -96,18 +96,18 @@ function SearchResultsContent() {
       ) : filteredArticles.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredArticles.map((item) => (
-            <Link 
-              key={item.id} 
-              href={`/news/${item.id}`} 
+            <Link
+              key={item.id}
+              href={`/news/${item.id}`}
               className="group bg-background border border-foreground/10 rounded-3xl overflow-hidden hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col block"
             >
-              
+
               {/* Cover */}
               <div className={`relative h-44 w-full bg-gradient-to-br ${item.gradient} p-4 flex flex-col justify-between text-white overflow-hidden`}>
                 <div className="absolute left-[-10px] top-[-10px] w-28 h-28 opacity-15 pointer-events-none">
                   <Image src="/brand-logo.jpg" alt="Logo" fill className="object-contain" />
                 </div>
-                
+
                 <span className="self-start bg-white/20 text-white text-[11px] font-black px-2.5 py-1 rounded-xl border border-white/20">
                   {item.category}
                 </span>

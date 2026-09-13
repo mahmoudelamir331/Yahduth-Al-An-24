@@ -3,6 +3,10 @@
 -- avatar writes to their authenticated owner.
 drop policy if exists "Authenticated users can upload news media" on storage.objects;
 drop policy if exists "Authenticated users can update their news media" on storage.objects;
+drop policy if exists "News staff upload article media" on storage.objects;
+drop policy if exists "News staff update article media" on storage.objects;
+drop policy if exists "Users upload their own avatars" on storage.objects;
+drop policy if exists "Users update their own avatars" on storage.objects;
 
 create policy "News staff upload article media"
 on storage.objects for insert to authenticated

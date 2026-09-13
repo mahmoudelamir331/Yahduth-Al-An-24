@@ -9,6 +9,7 @@ import { SiteProtection } from "@/components/SiteProtection";
 import { AdSlot } from "@/components/AdSlot";
 import { MaintenancePage } from "@/components/MaintenancePage";
 import { getActiveCategories, getSiteSettings, isMaintenanceActive } from "@/lib/siteSettings";
+import { getSiteUrl } from "@/lib/site-url";
 
 const cairo = Cairo({
   subsets: ["arabic", "latin"],
@@ -17,7 +18,7 @@ const cairo = Cairo({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://yahduth-al-an-24.vercel.app"),
+  metadataBase: new URL(getSiteUrl()),
   icons: { icon: "/favicon.png", shortcut: "/favicon.png", apple: "/favicon.png" },
   openGraph: { title: "يحدث الآن 24", description: "أخبار عاجلة وتغطية صحفية شاملة", images: [{ url: "/brand-logo.jpg", width: 1408, height: 768, alt: "شعار يحدث الآن 24" }] },
   twitter: { card: "summary_large_image", images: ["/brand-logo.jpg"] },
