@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useState, useSyncExternalStore } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Search, Menu, X, Moon, Sun, Calendar } from "lucide-react";
-import { useTheme } from "next-themes";
+import { Search, Menu, X, Calendar } from "lucide-react";
 import type { PublicCategory } from "@/lib/siteSettings";
 
 const TickerNews = [
@@ -20,12 +19,6 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const { theme, setTheme } = useTheme();
-  const mounted = useSyncExternalStore(
-    () => () => undefined,
-    () => true,
-    () => false,
-  );
   const router = useRouter();
   const brandLogo = logoUrl || "/brand-logo.jpg";
   const todayDate = "أسوان - مصر";
@@ -56,7 +49,7 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
       {/* Main Header Component */}
       <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-foreground/10 shadow-sm w-full overflow-hidden">
         <div className="container mx-auto px-3 sm:px-4 py-3 max-w-7xl flex items-center justify-between gap-3">
-          
+
           {/* Logo & Publisher Branding */}
           <Link href="/" className="flex items-center gap-2.5 group shrink-0">
             <div className="relative w-11 h-10 sm:w-14 sm:h-12 rounded-2xl overflow-hidden border-2 border-primary shadow-sm bg-primary/10 group-hover:scale-105 transition-transform duration-200">
@@ -115,24 +108,12 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
 
           {/* Header Action Buttons */}
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            <button 
+            <button
               onClick={() => setIsSearchOpen(true)}
               className="p-2.5 rounded-xl text-foreground/80 hover:text-primary hover:bg-foreground/5 transition-colors"
               aria-label="البحث"
             >
               <Search className="w-5 h-5" />
-            </button>
-
-            <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-              className="p-2.5 rounded-xl text-foreground/80 hover:text-primary hover:bg-foreground/5 transition-colors"
-              aria-label="تغيير الوضع"
-            >
-              {mounted ? (
-                theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />
-              ) : (
-                <div className="w-5 h-5" />
-              )}
             </button>
 
             <button

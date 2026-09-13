@@ -5,7 +5,7 @@ import { MapPin, ChevronLeft } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-foreground/[0.03] dark:bg-slate-900/80 text-foreground border-t border-foreground/10 mt-16 transition-colors duration-300">
+    <footer className="bg-foreground/[0.03] text-foreground border-t border-foreground/10 mt-16">
       <div className="container mx-auto px-4 py-12 space-y-10 max-w-7xl">
         
         {/* Top Grid Layout */}

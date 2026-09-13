@@ -7,6 +7,7 @@ import { Clock, Eye, TrendingUp, MapPin } from "lucide-react";
 import { ALL_NEWS } from "@/data/newsData";
 import { LiveMediaSection } from "@/components/LiveMediaSection";
 import { loadPublicData } from "@/lib/supabase-browser";
+import { AdSlot } from "@/components/AdSlot";
 
 const TrendingSidebar = [
   { id: 1, title: "قرار عاجل بشأن خطة رفع كفاءة الطرق السريعة بين أسوان والأقصر", views: "12.4k" },
@@ -51,8 +52,8 @@ export default function Home() {
 
   const categories = ["الكل", ...activeCategories.map((category) => category.name)];
 
-  const filteredNews = activeTab === "الكل" 
-    ? AllNewsList 
+  const filteredNews = activeTab === "الكل"
+    ? AllNewsList
     : AllNewsList.filter((n) => n.category.includes(activeTab));
 
   if (!maintenanceReady) {
@@ -74,7 +75,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-6 space-y-12">
-      
+
       {/* General Site Banner */}
       <section className="bg-gradient-to-r from-primary via-primary/95 to-slate-900 text-white rounded-3xl p-6 md:p-8 shadow-xl relative overflow-hidden flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10">
         <div className="space-y-3 max-w-2xl text-center md:text-right z-10">
@@ -118,18 +119,18 @@ export default function Home() {
 
       {/* Main Hero News Grid */}
       <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-        
+
         {/* Main Article Card (8 Columns) */}
         <Link href={`/news/${HeroMainArticle.id}`} className="lg:col-span-8 group bg-background border border-foreground/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col block">
           <div className="relative h-72 md:h-96 w-full overflow-hidden text-white flex flex-col justify-between p-6 md:p-8">
-            
+
             {/* Real Background Photo */}
             {HeroMainArticle.imageUrl ? (
-              <Image 
-                src={HeroMainArticle.imageUrl} 
-                alt={HeroMainArticle.title} 
-                fill 
-                className="object-cover group-hover:scale-105 transition-transform duration-500" 
+              <Image
+                src={HeroMainArticle.imageUrl}
+                alt={HeroMainArticle.title}
+                fill
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
                 priority
               />
             ) : (
@@ -144,7 +145,7 @@ export default function Home() {
                 <span className="w-2 h-2 rounded-full bg-white"></span>
                 خبر عاجل
               </span>
-              
+
               <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-xs font-bold">
                 <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0">
                   <Image src="/brand-logo.jpg" alt="لوجو" fill className="object-cover" />
@@ -160,7 +161,7 @@ export default function Home() {
               <p className="text-xs md:text-sm text-slate-200 line-clamp-2 font-medium leading-relaxed drop-shadow">
                 {HeroMainArticle.excerpt}
               </p>
-              
+
               <div className="flex items-center gap-3 text-xs text-slate-300 pt-2 font-bold flex-wrap">
                 <span className="flex items-center gap-1.5 bg-amber-400 text-slate-950 font-black px-3 py-1 rounded-lg shadow-sm">
                   <div className="relative w-3.5 h-3.5 rounded-full overflow-hidden shrink-0">
@@ -199,7 +200,7 @@ export default function Home() {
           <div className="space-y-3">
             {HeroSubArticles.map((art) => (
               <Link key={art.id} href={`/news/${art.id}`} className="bg-background border border-foreground/10 rounded-2xl p-3 flex gap-3 items-center hover:border-primary/40 hover:shadow-md transition-all duration-200 group cursor-pointer block">
-                
+
                 <div className="relative w-24 h-20 rounded-xl overflow-hidden shrink-0 bg-slate-900">
                   {art.imageUrl ? (
                     <Image src={art.imageUrl} alt={art.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
@@ -231,7 +232,7 @@ export default function Home() {
 
       {/* Interactive Category Tabs & News Section */}
       <section className="space-y-6 pt-2">
-        
+
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-foreground/10 pb-4">
           <div className="flex items-center gap-3">
             <div className="relative w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/30 shrink-0 shadow-sm">
@@ -263,12 +264,12 @@ export default function Home() {
 
         {/* News Grid + Sidebar */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          
+
           {/* Main Cards Grid */}
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-5">
             {filteredNews.map((item) => (
               <Link key={item.id} href={`/news/${item.id}`} className="bg-background border border-foreground/10 rounded-2xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-200 flex flex-col group block">
-                
+
                 {/* Photo / Gradient Cover */}
                 <div className="relative h-44 w-full bg-slate-900 p-4 flex flex-col justify-between text-white overflow-hidden">
                   {item.imageUrl ? (
@@ -320,7 +321,9 @@ export default function Home() {
           </div>
 
           {/* Trending Sidebar */}
-          <div className="lg:col-span-4 bg-foreground/5 border border-foreground/10 rounded-2xl p-5 space-y-5 h-fit">
+          <div className="lg:col-span-4 space-y-5">
+            <AdSlot slot="sidebar" />
+            <div className="bg-foreground/5 border border-foreground/10 rounded-2xl p-5 space-y-5 h-fit">
             <div className="flex items-center justify-between border-b border-foreground/10 pb-3">
               <div className="flex items-center gap-2">
                 <div className="relative w-6 h-6 rounded-full overflow-hidden shrink-0 border border-urgent/40">
@@ -367,11 +370,9 @@ export default function Home() {
                 تغطية صحفية مستقلة ومباشرة لجميع أحداث وتطورات محافظة أسوان وصعيد مصر لحظة بلحظة.
               </p>
             </div>
-
           </div>
-
+          </div>
         </div>
-
       </section>
 
     </div>

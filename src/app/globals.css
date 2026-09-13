@@ -21,14 +21,6 @@
   --accent: #d97706;
 }
 
-.dark {
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --primary: #3b82f6;
-  --urgent: #ef4444;
-  --accent: #f59e0b;
-}
-
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
