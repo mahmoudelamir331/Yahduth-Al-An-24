@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Clock, Eye, TrendingUp, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { Clock, Eye, TrendingUp, MapPin, Flame } from "lucide-react";
 import { ALL_NEWS } from "@/data/newsData";
 import { LiveMediaSection } from "@/components/LiveMediaSection";
 import { loadPublicData } from "@/lib/supabase-browser";
@@ -117,12 +118,18 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Main Hero News Grid */}
-      <section className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+      {/* Bento Grid — Hero News Layout */}
+      <section className="bento-grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:gap-5 items-stretch">
 
-        {/* Main Article Card (8 Columns) */}
-        <Link href={`/news/${HeroMainArticle.id}`} className="lg:col-span-8 group bg-background border border-foreground/10 rounded-3xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col block">
-          <div className="relative h-72 md:h-96 w-full overflow-hidden text-white flex flex-col justify-between p-6 md:p-8">
+        {/* Bento: Main Feature Article */}
+        <motion.div
+          className="bento-card group relative overflow-hidden rounded-[2rem] border-white/10 bg-slate-950 shadow-[0_24px_60px_-24px_rgba(15,23,42,0.55)] transition-shadow duration-300 hover:shadow-[0_32px_70px_-20px_rgba(30,58,138,0.45)] sm:col-span-2 lg:col-span-8 lg:row-span-2"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.55, ease: "easeOut" }}
+        >
+          <Link href={`/news/${HeroMainArticle.id}`} className="relative flex h-full min-h-[22rem] flex-col justify-between p-6 text-white md:p-8 lg:min-h-[30rem]">
 
             {/* Real Background Photo */}
             {HeroMainArticle.imageUrl ? (
@@ -130,23 +137,24 @@ export default function Home() {
                 src={HeroMainArticle.imageUrl}
                 alt={HeroMainArticle.title}
                 fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
                 priority
               />
             ) : (
               <div className={`absolute inset-0 bg-gradient-to-br ${HeroMainArticle.gradient}`}></div>
             )}
 
-            {/* Dark Overlay for Readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-black/20"></div>
+            {/* Depth Overlays for Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-black/10"></div>
+            <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-primary/40 to-transparent mix-blend-overlay"></div>
 
-            <div className="flex justify-between items-start z-10">
+            <div className="relative z-10 flex items-start justify-between gap-3">
               <span className="bg-urgent text-white text-xs font-black px-3.5 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 pulse-urgent">
                 <span className="w-2 h-2 rounded-full bg-white"></span>
-                خبر عاجل
+                {HeroMainArticle.isUrgent ? "خبر عاجل" : "تغطية مميزة"}
               </span>
 
-              <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border border-white/20 text-xs font-bold">
+              <div className="flex items-center gap-2 bg-black/60 backdrop-blur-md px-3 py-1 rounded-full border-white/20 text-xs font-bold">
                 <div className="relative w-4 h-4 rounded-full overflow-hidden shrink-0">
                   <Image src="/brand-logo.jpg" alt="لوجو" fill className="object-cover" />
                 </div>
@@ -154,8 +162,8 @@ export default function Home() {
               </div>
             </div>
 
-            <div className="space-y-3 z-10 mt-auto">
-              <h2 className="text-xl md:text-3xl lg:text-4xl font-black leading-tight group-hover:text-amber-300 transition-colors drop-shadow-md">
+            <div className="relative z-10 mt-auto space-y-3">
+              <h2 className="text-2xl font-black leading-tight drop-shadow-md transition-colors group-hover:text-amber-300 md:text-3xl lg:text-[2.6rem]">
                 {HeroMainArticle.title}
               </h2>
               <p className="text-xs md:text-sm text-slate-200 line-clamp-2 font-medium leading-relaxed drop-shadow">
@@ -182,46 +190,107 @@ export default function Home() {
               </div>
             </div>
 
-          </div>
-        </Link>
+          </Link>
+        </motion.div>
 
-        {/* Secondary Articles Stack (4 Columns) */}
-        <div className="lg:col-span-4 space-y-3">
-          <div className="flex items-center justify-between border-b border-foreground/10 pb-2">
-            <h3 className="text-base font-black text-primary flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-urgent" />
-              أبرز متابعات اليوم
-            </h3>
-            <div className="relative w-5 h-5 rounded-full overflow-hidden border border-primary/20 shrink-0">
-              <Image src="/brand-logo.jpg" alt="Logo" fill className="object-cover" />
-            </div>
-          </div>
+        {/* Bento: Secondary Trending Cards */}
+        {HeroSubArticles.slice(0, 2).map((art, index) => (
+          <motion.div
+            key={art.id}
+            className="bento-card group overflow-hidden rounded-[1.75rem] border-foreground/10 bg-background shadow-md transition-all duration-300 hover:border-primary/30 hover:shadow-xl"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: 0.5, delay: 0.08 * (index + 1), ease: "easeOut" }}
+          >
+            <Link href={`/news/${art.id}`} className="flex h-full flex-col">
+              <div className="relative h-40 w-full overflow-hidden bg-slate-900">
+                {art.imageUrl ? (
+                  <Image src={art.imageUrl} alt={art.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                ) : (
+                  <div className={`absolute inset-0 bg-gradient-to-br ${art.gradient}`}></div>
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent"></div>
+                <span className="absolute bottom-3 right-3 z-10 rounded-lg border-white/20 bg-black/60 px-2.5 py-1 text-[10px] font-extrabold text-white backdrop-blur-md">
+                  {art.category}
+                </span>
+              </div>
 
-          <div className="space-y-3">
-            {HeroSubArticles.map((art) => (
-              <Link key={art.id} href={`/news/${art.id}`} className="bg-background border border-foreground/10 rounded-2xl p-3 flex gap-3 items-center hover:border-primary/40 hover:shadow-md transition-all duration-200 group cursor-pointer block">
-
-                <div className="relative w-24 h-20 rounded-xl overflow-hidden shrink-0 bg-slate-900">
-                  {art.imageUrl ? (
-                    <Image src={art.imageUrl} alt={art.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
-                  ) : (
-                    <div className={`w-full h-full bg-gradient-to-br ${art.gradient}`}></div>
-                  )}
+              <div className="flex flex-1 flex-col justify-between gap-3 p-4">
+                <div className="space-y-1.5">
+                  <h3 className="text-sm font-black leading-snug text-foreground transition-colors group-hover:text-primary line-clamp-2">
+                    {art.title}
+                  </h3>
+                  <p className="text-xs font-medium leading-relaxed text-foreground/70 line-clamp-2">
+                    {art.excerpt}
+                  </p>
                 </div>
-
-                <div className="flex-1 space-y-1">
-                  <span className="text-[10px] font-extrabold text-primary bg-primary/10 px-2 py-0.5 rounded">
-                    {art.category}
+                <div className="flex items-center justify-between border-t border-foreground/10 pt-2.5 text-[10px] font-bold text-foreground/50">
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {art.date}
                   </span>
-                  <h4 className="text-xs font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-snug">
+                  <span className="flex items-center gap-1">
+                    <Eye className="w-3 h-3" />
+                    {art.views}
+                  </span>
+                </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+
+        {/* Bento: Most Read Compact Card */}
+        <motion.div
+          className="bento-card flex-col rounded-[1.75rem] border-foreground/10 bg-foreground/[0.03] p-4 shadow-md backdrop-blur-sm lg:col-span-4 lg:row-span-1"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.15 }}
+          transition={{ duration: 0.5, delay: 0.24, ease: "easeOut" }}
+        >
+          <div className="mb-3 flex items-center justify-between border-b border-foreground/10 pb-2.5">
+            <h3 className="flex items-center gap-2 text-sm font-black text-primary">
+              <Flame className="h-4 w-4 text-urgent" />
+              الأكثر قراءة الآن
+            </h3>
+            <span className="rounded bg-urgent/10 px-2 py-0.5 text-[10px] font-black text-urgent">تريند</span>
+          </div>
+
+          <div className="flex flex-1 flex-col justify-between gap-2">
+            {HeroSubArticles.map((art, index) => (
+              <Link key={art.id} href={`/news/${art.id}`} className="group -mx-1 flex items-start gap-3 rounded-2xl p-2 transition-colors duration-200 hover:bg-foreground/[0.05]">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-[11px] font-black text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                  {index + 1}
+                </span>
+                <div className="space-y-0.5">
+                  <h4 className="text-xs font-bold leading-snug text-foreground transition-colors group-hover:text-primary line-clamp-2">
                     {art.title}
                   </h4>
-                  <span className="text-[10px] text-foreground/50 block font-bold">
-                    {art.date}
+                  <span className="flex items-center gap-1 text-[10px] font-medium text-foreground/50">
+                    <Eye className="h-3 w-3" />
+                    {art.views} قراءة
                   </span>
                 </div>
               </Link>
             ))}
+          </div>
+
+          <div className="mt-3 flex items-center gap-2 rounded-2xl bg-primary/[0.06] p-2 text-[10px] font-bold text-foreground/60">
+            <TrendingUp className="h-3.5 w-3.5 shrink-0 text-urgent" />
+            تحديث لحظي لأكثر الأخبار تفاعلاً خلال الساعات الماضية.
+          </div>
+        </motion.div>
+
+        {/* Bento: Ad Slot (Single, Layout-Safe) */}
+        <div className="flex lg:col-span-4 lg:row-span-1">
+          <div className="bento-card flex w-full flex-col overflow-hidden rounded-[1.75rem] border-dashed border-primary/25 bg-primary/[0.04] p-3 shadow-sm">
+            <div className="mb-2 flex items-center justify-between text-[10px] font-black text-foreground/40">
+              <span>مساحة إعلانية</span>
+              <span className="tracking-widest">AD</span>
+            </div>
+            <div className="flex flex-1 items-center justify-center overflow-hidden rounded-2xl bg-background/40 [&_a]:my-0 [&_img]:max-h-40 [&_img]:rounded-xl">
+              <AdSlot slot="home_page" />
+            </div>
           </div>
         </div>
 
@@ -267,13 +336,21 @@ export default function Home() {
 
           {/* Main Cards Grid */}
           <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-5">
-            {filteredNews.map((item) => (
-              <Link key={item.id} href={`/news/${item.id}`} className="bg-background border border-foreground/10 rounded-2xl overflow-hidden hover:shadow-lg hover:border-primary/30 transition-all duration-200 flex flex-col group block">
+            {filteredNews.map((item, index) => (
+              <motion.div
+                key={item.id}
+                className="news-card overflow-hidden rounded-3xl bg-background shadow-[0_6px_24px_-14px_rgba(30,58,138,0.22)] hover:shadow-[0_24px_48px_-20px_rgba(30,58,138,0.34)] hover:-translate-y-1 transition-[transform,box-shadow] duration-300 ease-out"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.5, delay: 0.05 * (index % 4), ease: "easeOut" }}
+              >
+                  <Link href={`/news/${item.id}`} className="flex h-full flex-col group">
 
                 {/* Photo / Gradient Cover */}
                 <div className="relative h-44 w-full bg-slate-900 p-4 flex flex-col justify-between text-white overflow-hidden">
                   {item.imageUrl ? (
-                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-300" />
+                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                   ) : (
                     <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`}></div>
                   )}
@@ -293,7 +370,7 @@ export default function Home() {
 
                 <div className="p-4 flex-1 flex flex-col justify-between space-y-3">
                   <div className="space-y-1.5">
-                    <h3 className="text-sm md:text-base font-bold text-foreground group-hover:text-primary transition-colors leading-snug line-clamp-2">
+                    <h3 className="text-sm font-black text-foreground transition-colors group-hover:text-primary leading-snug line-clamp-2 md:text-base">
                       {item.title}
                     </h3>
                     <p className="text-xs text-foreground/70 line-clamp-2 leading-relaxed font-medium">
@@ -301,7 +378,7 @@ export default function Home() {
                     </p>
                   </div>
 
-                  <div className="pt-2 border-t border-foreground/10 flex items-center justify-between text-[11px] text-foreground/50 font-bold">
+                  <div className="flex items-center justify-between pt-2 text-[11px] font-bold text-foreground/50 shadow-[inset_0_1px_0_0_rgba(15,23,42,0.06)]">
                     <span className="text-primary flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-primary"></span>
                       {item.author}
@@ -316,7 +393,8 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-              </Link>
+                </Link>
+              </motion.div>
             ))}
           </div>
 
@@ -363,7 +441,7 @@ export default function Home() {
                 </div>
                 <div>
                   <h4 className="font-extrabold text-xs text-white">يحدث الآن 24</h4>
-                  <p className="text-[10px] text-amber-300 font-bold">بوابة إخبارية مستتقلة 24/7</p>
+                  <p className="text-[10px] text-amber-300 font-bold">بوابة إخبارية مستقلة 24/7</p>
                 </div>
               </div>
               <p className="text-[11px] text-slate-200 leading-relaxed font-medium">

@@ -41,6 +41,8 @@ yarn-error.log*
 /ngrok.log
 /next-dev-error.log
 /lint-output.txt
+/*-error.log
+/*.log
 
 # supabase local
 /supabase/.temp/
@@ -57,3 +59,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+# local utility scripts that may embed credentials
+*.ps1
+check_schema.ps1
+# stray build / audit output
+/admin-build*.log
+/build-final*.log
+*serveo*.log

@@ -47,7 +47,7 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
       </div>
 
       {/* Main Header Component */}
-      <header className="sticky top-0 z-50 bg-background/95 backdrop-blur-md border-b border-foreground/10 shadow-sm w-full overflow-hidden">
+      <header className="sticky top-0 z-50 bg-white/70 backdrop-blur-xl border-b border-white/40 shadow-sm w-full overflow-hidden">
         <div className="container mx-auto px-3 sm:px-4 py-3 max-w-7xl flex items-center justify-between gap-3">
 
           {/* Logo & Publisher Branding */}
@@ -140,7 +140,7 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
                   <span className="text-foreground/70 font-bold">بوابة إخبارية صحفية مستقلة</span>
                 </div>
               </div>
-              
+
               <div className="grid grid-cols-2 gap-2 pt-1">
                 {[{ name: "الرئيسية", href: "/" }, ...categories.map((category) => ({ name: category.name, href: `/category/${category.slug}` })), { name: "من نحن", href: "/about" }, { name: "اتصل بنا", href: "/contact" }].map((cat) => (
                   <Link
@@ -158,8 +158,9 @@ export function Header({ categories, logoUrl }: { categories: PublicCategory[]; 
         )}
 
         {/* Responsive Live News Marquee */}
-        <div className="bg-urgent/10 border-t border-foreground/10 text-foreground overflow-hidden flex items-center h-9 text-xs w-full max-w-full">
+        <div className="sticky top-0 z-40 bg-urgent/10 border-t border-foreground/10 text-foreground overflow-hidden flex items-center h-9 text-xs w-full max-w-full backdrop-blur-md">
           <div className="bg-urgent text-white font-black px-3.5 h-full flex items-center gap-1.5 shrink-0 z-10 shadow-md">
+            <span className="ticker-pulse-dot" aria-hidden="true"></span>
             <div className="relative w-4 h-4 rounded-full overflow-hidden border border-white/40 shrink-0">
               <Image src={brandLogo} alt="عاجل" fill className="object-cover" />
             </div>

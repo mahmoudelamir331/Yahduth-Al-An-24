@@ -5,7 +5,9 @@ import type { NextRequest } from "next/server";
 import { createHash } from "node:crypto";
 import { getServerClient } from "@/lib/supabase-server";
 
-const fields = "id,title,image_url,target_url,custom_code,placement,ad_type,start_date,end_date";
+// The `ads` table stores the display label in `name`; the client component expects `title`,
+// so the column is aliased here to keep the public response shape stable.
+const fields = "id,title:name,image_url,target_url,custom_code,placement,ad_type,start_date,end_date";
 const placements = new Set(["header", "sidebar", "in_article", "home_page"]);
 
 function trusted(request: NextRequest) {
