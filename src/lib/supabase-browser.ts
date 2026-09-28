@@ -31,6 +31,7 @@ export type PublicArticleRow = {
   read_minutes: number;
   published_at: string | null;
   categories: { name: string; slug: string } | { name: string; slug: string }[] | null;
+  article_tags?: { tag: string }[] | null;
 };
 
 export function toPublicArticle(row: PublicArticleRow) {
@@ -44,6 +45,7 @@ export function toPublicArticle(row: PublicArticleRow) {
     category: category?.name ?? "أخبار أسوان",
     categorySlug: category?.slug ?? "aswan-news",
     isUrgent: row.is_urgent,
+    isHeadline: row.is_headline,
     title: row.title,
     excerpt: row.excerpt,
     content,
@@ -54,17 +56,18 @@ export function toPublicArticle(row: PublicArticleRow) {
     date: row.published_at ? new Date(row.published_at).toLocaleDateString("ar-EG") : "الآن",
     views: new Intl.NumberFormat("ar-EG", { notation: "compact" }).format(row.views_count ?? 0),
     readTime: `${row.read_minutes ?? 1} دقائق`,
-    tags: [],
-  };
-}
+    tags: Array.isArray(row.article_tags) ? row.article_tags.map((item) => item.tag).filter(Boolean) : [],
+  };}
 
 export async function loadPublicData() {
   if (!supabase) return null;
   const [articlesResult, settingsResult, categoriesResult] = await Promise.all([
     supabase
       .from("articles")
-      .select("id,slug,title,excerpt,content,cover_image_url,image_caption,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
+      .select("id,slug,title,excerpt,content,cover_image_url,image_caption,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug),article_tags(tag)")
       .eq("status", "published")
+  // جدولة النشر: الخبر المنشور بيظهر بس لما published_at ييجي وقته (past أو now).
+  // published_at null يعتبر منشور فوراً.
       .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .order("published_at", { ascending: false, nullsFirst: false }),
     supabase

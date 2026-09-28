@@ -23,7 +23,8 @@ const FALLBACK_TITLES: Record<string, string> = {
 };
 
 export default function CategoryPage({ params }: PageProps) {
-  const slug = use(params).slug;
+  // الـ slug بييجي URL-encoded من الـ router (مثل أخبار-تعليميه = %D8%A3%D8%AE%D8%A8%D8%A7%D8%B1-...)، فلازم نعمل decode
+  const slug = decodeURIComponent(use(params).slug);
 
   const [articles, setArticles] = useState<Article[]>([]);
   const [categoryTitle, setCategoryTitle] = useState<string>(FALLBACK_TITLES[slug] ?? "قسم الأخبار");

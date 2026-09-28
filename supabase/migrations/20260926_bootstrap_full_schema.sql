@@ -33,11 +33,9 @@ as $$
         coalesce(up.permissions ->> required_key, 'false') = 'true'
         or (required_key = 'article.create' and (up.permissions ?| array['content','manage_content','news.create']))
         or (required_key = 'article.edit'   and (up.permissions ?| array['content','manage_content','news.edit']))
-        or (required_key = 'article.delete' and (up.permissions ?| array['content','manage_content','news.delete']))
         or (required_key = 'article.view'   and (up.permissions ?| array['content','manage_content','dashboard']))
-        or (required_key = 'categories.manage' and (up.permissions ?| array['content','manage_content','news.publish']))
+        or (required_key = 'categories.manage' and (up.permissions ?| array['content','manage_content']))
         or (required_key = 'dashboard'      and (up.permissions ?| array['content','manage_content']))
-        or (required_key = 'settings.manage' and (up.permissions ?| array['content','manage_content','manage_content']))
       )
   );
 $$;
@@ -133,6 +131,9 @@ create table if not exists public.site_settings (
   social_facebook text,
   social_twitter text,
   social_youtube text,
+  social_instagram text,
+  social_telegram text,
+  social_whatsapp text,
   maintenance_enabled boolean not null default false,
   maintenance_message text,
   maintenance_ends_at timestamptz,
@@ -142,6 +143,9 @@ create table if not exists public.site_settings (
   ads jsonb not null default '{}'::jsonb,
   logo_url text,
   favicon_url text,
+  ticker_enabled boolean not null default false,
+  ticker_text text,
+  ticker_link text,
   updated_by uuid references auth.users(id) on delete set null,
   updated_at timestamptz not null default now(),
   constraint site_settings_single_row check (id)
@@ -161,7 +165,16 @@ select
   content_protection_enabled,
   anti_adblock_enabled,
   ads,
-  logo_url
+  logo_url,
+  social_facebook,
+  social_twitter,
+  social_youtube,
+  social_instagram,
+  social_telegram,
+  social_whatsapp,
+  ticker_enabled,
+  ticker_text,
+  ticker_link
 from public.site_settings
 where id = true;
 

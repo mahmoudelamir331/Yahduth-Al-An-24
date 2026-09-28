@@ -8,6 +8,7 @@ import { LiveBroadcastBanner } from "@/components/LiveBroadcastBanner";
 import { SiteProtection } from "@/components/SiteProtection";
 import { AdSlot } from "@/components/AdSlot";
 import { MaintenancePage } from "@/components/MaintenancePage";
+import { BreakingNewsTicker } from "@/components/BreakingNewsTicker";
 import { getActiveCategories, getSiteSettings, isMaintenanceActive } from "@/lib/siteSettings";
 import { getSiteUrl } from "@/lib/site-url";
 
@@ -47,10 +48,15 @@ export default async function RootLayout({
           <>
             <SiteProtection enabled={siteSettings?.content_protection_enabled ?? false} antiAdblockEnabled={siteSettings?.anti_adblock_enabled ?? false}>
               <AdSlot slot="header" />
+              <BreakingNewsTicker
+                enabled={siteSettings?.ticker_enabled ?? false}
+                text={siteSettings?.ticker_text ?? null}
+                link={siteSettings?.ticker_link ?? null}
+              />
               <Header categories={categories} logoUrl={siteSettings?.logo_url ?? null} />
               <LiveBroadcastBanner enabled={siteSettings?.live_enabled ?? false} url={siteSettings?.live_url ?? null} platform={siteSettings?.live_platform ?? null} />
               <main className="flex-1">{children}</main>
-              <Footer />
+              <Footer socialLinks={siteSettings?.social_links} />
             </SiteProtection>
           </>
         )}

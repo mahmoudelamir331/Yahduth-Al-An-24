@@ -25,7 +25,8 @@ interface PageProps {
 }
 
 export default function NewsDetailPage({ params }: PageProps) {
-  const resolvedParams = use(params);
+  // الـ id/slug بييجي URL-encoded، فلازم نعمل decode عشان نطابق الـ slug العربي
+  const resolvedParams = { id: decodeURIComponent(use(params).id) };
   const [article, setArticle] = useState<Article | undefined>(() => getArticleById(resolvedParams.id));
   const [copied, setCopied] = useState(false);
 

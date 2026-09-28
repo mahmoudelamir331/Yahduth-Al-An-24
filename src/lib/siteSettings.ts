@@ -13,6 +13,10 @@ type SiteSettings = {
   anti_adblock_enabled: boolean;
   ads: { header?: AdSlot; article?: AdSlot; sidebar?: AdSlot };
   logo_url: string | null;
+  ticker_enabled: boolean;
+  ticker_text: string | null;
+  ticker_link: string | null;
+  social_links: { facebook: string | null; twitter: string | null; youtube: string | null; instagram: string | null; telegram: string | null; whatsapp: string | null };
 };
 
 export type PublicCategory = { name: string; slug: string };
@@ -22,7 +26,7 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const { data, error } = await supabase
       .from("public_site_settings")
-      .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams,content_protection_enabled,anti_adblock_enabled,ads,logo_url")
+      .select("maintenance_enabled,maintenance_message,maintenance_ends_at,live_streams,content_protection_enabled,anti_adblock_enabled,ads,logo_url,social_facebook,social_twitter,social_youtube,social_instagram,social_telegram,social_whatsapp,ticker_enabled,ticker_text,ticker_link")
       .eq("id", true)
       .single();
     if (error || !data) return null;
@@ -35,6 +39,15 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       anti_adblock_enabled?: boolean;
       ads?: SiteSettings["ads"] | null;
       logo_url?: string | null;
+      social_facebook?: string | null;
+      social_twitter?: string | null;
+      social_youtube?: string | null;
+      social_instagram?: string | null;
+      social_telegram?: string | null;
+      social_whatsapp?: string | null;
+      ticker_enabled?: boolean;
+      ticker_text?: string | null;
+      ticker_link?: string | null;
     };
     return {
       maintenance_enabled: row.maintenance_enabled,
@@ -47,6 +60,17 @@ export async function getSiteSettings(): Promise<SiteSettings | null> {
       anti_adblock_enabled: row.anti_adblock_enabled ?? false,
       ads: row.ads ?? {},
       logo_url: row.logo_url ?? null,
+      ticker_enabled: row.ticker_enabled === true && Boolean(row.ticker_text?.trim()),
+      ticker_text: row.ticker_text ?? null,
+      ticker_link: row.ticker_link ?? null,
+      social_links: {
+        facebook: row.social_facebook ?? null,
+        twitter: row.social_twitter ?? null,
+        youtube: row.social_youtube ?? null,
+        instagram: row.social_instagram ?? null,
+        telegram: row.social_telegram ?? null,
+        whatsapp: row.social_whatsapp ?? null,
+      },
     };
   } catch {
     return null;

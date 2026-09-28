@@ -47,9 +47,16 @@ export default function Home() {
     return () => { cancelled = true; window.clearInterval(timer); };
   }, []);
 
-  const HeroMainArticle = news[0] ?? ALL_NEWS[0];
-  const HeroSubArticles = news.slice(1, 4);
-  const AllNewsList = news.slice(4);
+  // الأخبار المثبتة (is_headline) بتعالأ في البداية، بعدين الترتيب العادي بالتاريخ
+  const orderedNews = React.useMemo(() => {
+    const headlines = news.filter((item) => item.isHeadline);
+    const rest = news.filter((item) => !item.isHeadline);
+    return [...headlines, ...rest];
+  }, [news]);
+
+  const HeroMainArticle = orderedNews[0] ?? ALL_NEWS[0];
+  const HeroSubArticles = orderedNews.slice(1, 4);
+  const AllNewsList = orderedNews.slice(4);
 
   const categories = ["الكل", ...activeCategories.map((category) => category.name)];
 

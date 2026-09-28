@@ -4,6 +4,7 @@ export interface Article {
   category: string;
   categorySlug: string;
   isUrgent?: boolean;
+  isHeadline?: boolean;
   title: string;
   excerpt: string;
   content: string[];
