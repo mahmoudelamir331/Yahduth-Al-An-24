@@ -1,16 +1,18 @@
 "use client";
 
-import React, { useState, use } from "react";
+import React, { useState, useEffect, use } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, ArrowRight, ChevronLeft, Loader2, Pin } from "lucide-react";
-import { getArticlesByCategory } from "@/data/newsData";
+import { getArticlesByCategory, type Article } from "@/data/newsData";
+import { loadPublicData } from "@/lib/supabase-browser";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-const CategoryTitles: Record<string, string> = {
+/** عناوين احتياطية للأقسام الثابتة — تُستعمل لو القسم مش موجود في الداتابيز. */
+const FALLBACK_TITLES: Record<string, string> = {
   aswan: "أخبار أسوان",
   urgent: "الأخبار العاجلة",
   politics: "سياسة واقتصاد",
@@ -21,11 +23,46 @@ const CategoryTitles: Record<string, string> = {
 };
 
 export default function CategoryPage({ params }: PageProps) {
-  const resolvedParams = use(params);
-  const slug = resolvedParams.slug;
+  const slug = use(params).slug;
 
-  const categoryTitle = CategoryTitles[slug] || "قسم الأخبار";
-  const allCategoryArticles = getArticlesByCategory(slug);
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [categoryTitle, setCategoryTitle] = useState<string>(FALLBACK_TITLES[slug] ?? "قسم الأخبار");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    // 1) جلب البيانات الحقيقية من Supabase (كل الأقسام والأخبار المنشورة)
+    loadPublicData()
+      .then((result) => {
+        if (cancelled || !result) return;
+
+        const match = (article: Article) => article.categorySlug === slug;
+
+        // عنوان القسم الحقيقي من جدول categories
+        const category = result.categories.find((item) => item.slug === slug);
+        if (category) setCategoryTitle(category.name);
+
+        // الأخبار المنشورة اللي في القسم ده (المطابقة بـ slug، مش بالاسم)
+        const categoryArticles = result.articles.filter(match);
+        if (categoryArticles.length > 0) {
+          setArticles(categoryArticles);
+        } else {
+          // بيانات احتياطية ثابتة لو القسم ده لسه فاضي في الداتابيز
+          setArticles(getArticlesByCategory(slug));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) setArticles(getArticlesByCategory(slug));
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => { cancelled = true; };
+  }, [slug]);
+
+  const allCategoryArticles = articles;
 
   const ITEMS_PER_PAGE = 6;
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
@@ -75,18 +112,26 @@ export default function CategoryPage({ params }: PageProps) {
       </div>
 
       {/* Articles Grid */}
-      {displayedArticles.length > 0 ? (
+      {loading ? (
+        <div className="flex flex-col items-center justify-center py-16 space-y-3">
+          <Loader2 className="w-8 h-8 animate-spin text-primary" />
+          <p className="text-sm font-bold text-foreground/60">جاري تحميل أخبار القسم...</p>
+        </div>
+      ) : displayedArticles.length > 0 ? (
         <div className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {displayedArticles.map((item) => (
               <Link
                 key={item.id}
-                href={`/news/${item.id}`}
+                href={`/news/${item.slug}`}
                 className="group bg-background border border-foreground/10 rounded-3xl overflow-hidden hover:shadow-xl hover:border-primary/40 transition-all duration-300 flex flex-col block"
               >
 
                 {/* Image / Gradient Cover */}
                 <div className={`relative h-48 w-full bg-gradient-to-br ${item.gradient} p-4 flex flex-col justify-between text-white overflow-hidden`}>
+                  {item.imageUrl ? (
+                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  ) : null}
                   <div className="absolute left-[-10px] top-[-10px] w-28 h-28 opacity-15 pointer-events-none">
                     <Image src="/brand-logo.jpg" alt="Logo" fill className="object-contain" />
                   </div>

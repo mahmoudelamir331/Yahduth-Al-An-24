@@ -9,6 +9,7 @@ export interface Article {
   content: string[];
   gradient: string;
   imageUrl?: string;
+  imageCaption?: string;
   author: string;
   date: string;
   views: string;

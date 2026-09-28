@@ -16,7 +16,7 @@ export async function generateMetadata({ params }: NewsLayoutProps): Promise<Met
   const canonicalPath = `/news/${encodeURIComponent(article.slug || article.id)}`;
   const title = article.title;
   const description = article.excerpt?.trim() || article.title;
-  const images = article.cover_image_url ? [{ url: article.cover_image_url, alt: title }] : [];
+  const images = article.cover_image_url ? [{ url: article.cover_image_url, alt: article.image_caption?.trim() || title }] : [];
 
   return {
     title,

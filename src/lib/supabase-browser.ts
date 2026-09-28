@@ -23,6 +23,7 @@ export type PublicArticleRow = {
   excerpt: string;
   content: unknown;
   cover_image_url: string | null;
+  image_caption: string | null;
   author_name: string;
   is_urgent: boolean;
   is_headline: boolean;
@@ -48,6 +49,7 @@ export function toPublicArticle(row: PublicArticleRow) {
     content,
     gradient: "from-slate-900 via-teal-950 to-slate-800",
     imageUrl: row.cover_image_url ?? undefined,
+    imageCaption: row.image_caption ?? undefined,
     author: row.author_name,
     date: row.published_at ? new Date(row.published_at).toLocaleDateString("ar-EG") : "الآن",
     views: new Intl.NumberFormat("ar-EG", { notation: "compact" }).format(row.views_count ?? 0),
@@ -61,7 +63,7 @@ export async function loadPublicData() {
   const [articlesResult, settingsResult, categoriesResult] = await Promise.all([
     supabase
       .from("articles")
-      .select("id,slug,title,excerpt,content,cover_image_url,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
+      .select("id,slug,title,excerpt,content,cover_image_url,image_caption,author_name,is_urgent,is_headline,views_count,read_minutes,published_at,categories(name,slug)")
       .eq("status", "published")
       .or(`published_at.is.null,published_at.lte.${new Date().toISOString()}`)
       .order("published_at", { ascending: false, nullsFirst: false }),

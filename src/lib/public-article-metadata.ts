@@ -9,6 +9,7 @@ type MetadataArticle = {
   title: string;
   excerpt: string | null;
   cover_image_url: string | null;
+  image_caption: string | null;
   published_at: string | null;
   updated_at: string | null;
 };
@@ -25,7 +26,7 @@ export const getPublishedArticleForMetadata = cache(async (idOrSlug: string): Pr
   const lookup = idOrSlug.trim();
   if (!supabase || !lookup) return null;
 
-  const select = "id,slug,title,excerpt,cover_image_url,published_at,updated_at";
+  const select = "id,slug,title,excerpt,cover_image_url,image_caption,published_at,updated_at";
   const baseQuery = () => supabase
     .from("articles")
     .select(select)

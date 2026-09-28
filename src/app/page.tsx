@@ -206,7 +206,7 @@ export default function Home() {
             <Link href={`/news/${art.id}`} className="flex h-full flex-col">
               <div className="relative h-40 w-full overflow-hidden bg-slate-900">
                 {art.imageUrl ? (
-                  <Image src={art.imageUrl} alt={art.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
+                  <Image src={art.imageUrl} alt={art.imageCaption || art.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
                 ) : (
                   <div className={`absolute inset-0 bg-gradient-to-br ${art.gradient}`}></div>
                 )}
@@ -350,7 +350,7 @@ export default function Home() {
                 {/* Photo / Gradient Cover */}
                 <div className="relative h-44 w-full bg-slate-900 p-4 flex flex-col justify-between text-white overflow-hidden">
                   {item.imageUrl ? (
-                    <Image src={item.imageUrl} alt={item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
+                    <Image src={item.imageUrl} alt={item.imageCaption || item.title} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                   ) : (
                     <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`}></div>
                   )}

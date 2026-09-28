@@ -209,7 +209,7 @@ export default function NewsDetailPage({ params }: PageProps) {
       {/* Featured Cover / Responsive Image Card */}
       <div className="relative h-72 md:h-96 w-full rounded-3xl overflow-hidden bg-slate-900 p-6 md:p-8 flex flex-col justify-end text-white shadow-xl border border-white/10">
         {article.imageUrl ? (
-          <Image src={article.imageUrl} alt={article.title} fill className="object-cover" priority />
+          <Image src={article.imageUrl} alt={article.imageCaption || article.title} fill className="object-cover" priority />
         ) : (
           <div className={`absolute inset-0 bg-gradient-to-br ${article.gradient}`}></div>
         )}
@@ -224,7 +224,7 @@ export default function NewsDetailPage({ params }: PageProps) {
           </div>
 
           <span className="text-[11px] font-bold text-slate-200 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10">
-            صورة صحفية حقيقية عالية الجودة
+            {article.imageCaption?.trim() || "صورة صحفية حقيقية عالية الجودة"}
           </span>
         </div>
       </div>
